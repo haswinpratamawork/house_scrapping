@@ -42,7 +42,8 @@ All settings come from environment variables (loaded from `.env` if present). Se
 
 | Variable | Default | Meaning |
 |----------|---------|---------|
-| `DATABASE_URL` | _(empty)_ | PostgreSQL DSN |
+| `DATABASE_URL` | _(empty)_ | PostgreSQL DSN for the **real data** DB |
+| `TEST_DATABASE_URL` | _(empty)_ | DSN for the **test** DB (name must contain `test`; tables are wiped each run) |
 | `REQUEST_DELAY_MIN` / `REQUEST_DELAY_MAX` | `2.0` / `5.0` | random delay (s) between requests |
 | `MAX_CONCURRENCY` | `2` | max simultaneous requests |
 | `MAX_RETRIES` | `4` | retries on 429/5xx/timeout |
