@@ -13,7 +13,10 @@ See [`docs/`](./docs) for the full design:
 
 ## Status
 
-Phase 0 (scaffold) in progress. See the implementation plan for phase order.
+All build phases complete (0–7). The pipeline scrapes Rumah123 live, normalizes, and
+persists to PostgreSQL with weekly price-change history and delisting. Validated end to
+end against the live site (parsed values spot-checked against listings). See
+[docs/implementation-plan.md](./docs/implementation-plan.md) for phase detail.
 
 ## Requirements
 
