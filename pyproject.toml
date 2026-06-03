@@ -1,0 +1,40 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "house-scrapping"
+version = "0.1.0"
+description = "Weekly Rumah123 property scraper for Jabodetabek (BRI agunan vs market price tracking)"
+requires-python = ">=3.11"
+dependencies = [
+    "httpx>=0.27",
+    "selectolax>=0.3",
+    "psycopg[binary]>=3.1",
+    "pydantic>=2.6",
+    "tenacity>=8.2",
+    "python-dotenv>=1.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "ruff>=0.5",
+]
+
+# Enabled in Phase 6:
+# [project.scripts]
+# house-scrape = "scraper.run:main"
+
+[tool.setuptools.packages.find]
+include = ["scraper*"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
