@@ -61,11 +61,31 @@ Tests never call the live site — they use saved fixtures and mocks.
 
 ## Running the scraper
 
-The CLI lands in Phase 6. It will look like:
-
 ```bash
-python -m scraper.run --dry-run --limit 5     # safe trial, no DB writes
-python -m scraper.run                         # full weekly run
+# safe trial: discover/fetch/parse a few listings, write nothing
+python -m scraper.run --dry-run --limit 5
+
+# scrape one city + type, capped pages (good first live test)
+python -m scraper.run --cities jakarta-selatan --types rumah --max-pages 2
+
+# full weekly run (all Jabodetabek cities + property types)
+python -m scraper.run
 ```
 
-A weekly `cron` example will be documented alongside it.
+Equivalent console script after `pip install -e .`: `house-scrape …`.
+
+**Flags:** `--cities a,b` · `--types rumah,tanah` · `--max-pages N` · `--limit N` ·
+`--dry-run` · `--log-level INFO`. A non-dry run requires `DATABASE_URL` and applies the
+schema automatically (safe to re-run).
+
+### Weekly schedule (local cron)
+
+The local Homebrew PostgreSQL must be running on its configured port first. Example:
+run every Monday at 02:00, logging to a file:
+
+```cron
+0 2 * * 1 cd /path/to/house_scrapping && .venv/bin/python -m scraper.run >> scrape.log 2>&1
+```
+
+Edit your crontab with `crontab -e`. When the project moves to Vertex/Cloud SQL, this is
+replaced by Cloud Scheduler + a Cloud Run job.

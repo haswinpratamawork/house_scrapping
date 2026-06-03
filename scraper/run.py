@@ -11,9 +11,11 @@ A single bad listing is logged and skipped; it never aborts the run. Every run w
 
 from __future__ import annotations
 
+import argparse
 import logging
+import sys
 from collections.abc import Callable
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 
 from scraper.config import Config
 from scraper.db.repository import Repository
@@ -124,8 +126,85 @@ class ScrapeRun:
         )
 
 
-def build_scrape_run(config: Config, repository: Repository) -> ScrapeRun:
+def build_scrape_run(
+    config: Config, repository: Repository | None, *, max_pages: int = 50
+) -> ScrapeRun:
     """Construct a production ScrapeRun (httpx fetcher + Rumah123 source)."""
     fetcher = HttpxFetcher(config)
-    source = Rumah123Source(config, fetcher)
+    source = Rumah123Source(config, fetcher, max_pages=max_pages)
     return ScrapeRun(repository, fetcher, source)
+
+
+# --- command line -----------------------------------------------------------------
+
+
+def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
+    parser = argparse.ArgumentParser(
+        prog="scraper.run",
+        description="Scrape Rumah123 property listings into PostgreSQL.",
+    )
+    parser.add_argument(
+        "--cities", help="comma-separated city slugs (override config defaults)"
+    )
+    parser.add_argument(
+        "--types", help="comma-separated property-type slugs (e.g. rumah,tanah)"
+    )
+    parser.add_argument(
+        "--max-pages", type=int, default=50, help="max index pages per city x type"
+    )
+    parser.add_argument(
+        "--limit", type=int, help="stop after processing this many listings"
+    )
+    parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="discover/fetch/parse but write nothing to the database",
+    )
+    parser.add_argument("--log-level", default="INFO", help="logging level")
+    return parser.parse_args(argv)
+
+
+def _config_from_args(args: argparse.Namespace) -> Config:
+    config = Config.from_env()
+    if args.cities:
+        config = replace(config, cities=tuple(_split(args.cities)))
+    if args.types:
+        config = replace(config, property_types=tuple(_split(args.types)))
+    return config
+
+
+def _split(value: str) -> list[str]:
+    return [item.strip() for item in value.split(",") if item.strip()]
+
+
+def main(argv: list[str] | None = None) -> int:
+    args = _parse_args(argv)
+    logging.basicConfig(
+        level=args.log_level.upper(),
+        format="%(asctime)s %(levelname)s %(name)s %(message)s",
+    )
+    config = _config_from_args(args)
+
+    repository: Repository | None = None
+    if not args.dry_run:
+        if not config.database_url:
+            logger.error("DATABASE_URL is not set; cannot write results")
+            return 2
+        repository = Repository.connect(config.database_url)
+        repository.apply_schema()
+
+    try:
+        run = build_scrape_run(config, repository, max_pages=args.max_pages)
+        stats = run.execute(limit=args.limit, dry_run=args.dry_run)
+    except Exception:
+        logger.exception("scrape run failed")
+        return 1
+    finally:
+        if repository is not None:
+            repository.close()
+
+    return 0 if stats.status == "completed" else 1
+
+
+if __name__ == "__main__":
+    sys.exit(main())

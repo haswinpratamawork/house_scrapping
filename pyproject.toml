@@ -22,9 +22,8 @@ dev = [
     "ruff>=0.5",
 ]
 
-# Enabled in Phase 6:
-# [project.scripts]
-# house-scrape = "scraper.run:main"
+[project.scripts]
+house-scrape = "scraper.run:main"
 
 [tool.setuptools.packages.find]
 include = ["scraper*"]
