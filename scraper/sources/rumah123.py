@@ -10,6 +10,7 @@ name is taken from the page's JSON-LD ``Product`` offer (a stable, standardized 
 from __future__ import annotations
 
 import json
+import logging
 import re
 from collections.abc import Iterator
 from typing import Any
@@ -17,6 +18,8 @@ from typing import Any
 from scraper.config import Config
 from scraper.fetch.base import Fetcher, FetchError
 from scraper.sources.base import Source
+
+logger = logging.getLogger("scraper.sources.rumah123")
 
 # Listing detail URLs end with a slug + short code + digits, e.g. ...-hos41544728/,
 # ...-aps7274021/, ...-las9013631/ (and sponsored v* variants).
@@ -156,8 +159,19 @@ class Rumah123Source(Source):
             url = self._config.index_url(city, property_type, page, district=self._district)
             try:
                 html = self._fetcher.get(url)
-            except FetchError:
-                break  # past the last page (or blocked); stop this combo
+            except FetchError as exc:
+                # An index fetch failed (e.g. rate-limited). On page 1 the whole property
+                # type is at risk of being skipped — log loudly so it isn't silent.
+                level = logging.WARNING if page == 1 else logging.INFO
+                logger.log(
+                    level,
+                    "index fetch failed (%s %s p%d) — may be incomplete: %s",
+                    self._district or city,
+                    property_type,
+                    page,
+                    exc,
+                )
+                break
             urls = self.extract_listing_urls(html)
             if not urls:
                 break  # no listings -> end of pages
