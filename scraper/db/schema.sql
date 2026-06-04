@@ -19,6 +19,8 @@ CREATE TABLE IF NOT EXISTS listings (
     land_area_m2      numeric,                     -- LT (luas tanah)
     building_area_m2  numeric,                     -- LB (luas bangunan)
     certificate       text,                        -- SHM, HGB, ...
+    listing_created_at  timestamptz,               -- "dibuat" on Rumah123 (source created date)
+    listing_updated_at  timestamptz,               -- "diperbarui" on Rumah123 (source updated date)
     extra_specs       jsonb       NOT NULL DEFAULT '{}'::jsonb,
     agent_name        text,
     first_seen_at     timestamptz NOT NULL DEFAULT now(),
@@ -50,6 +52,11 @@ CREATE TABLE IF NOT EXISTS scrape_runs (
     notes              text
 );
 
+-- Self-migrating: add columns to pre-existing tables (no-op once present).
+ALTER TABLE listings ADD COLUMN IF NOT EXISTS listing_created_at timestamptz;
+ALTER TABLE listings ADD COLUMN IF NOT EXISTS listing_updated_at timestamptz;
+
 CREATE INDEX IF NOT EXISTS idx_listings_city_type  ON listings (city, property_type);
 CREATE INDEX IF NOT EXISTS idx_listings_is_active   ON listings (is_active);
+CREATE INDEX IF NOT EXISTS idx_listings_updated_at  ON listings (listing_updated_at);
 CREATE INDEX IF NOT EXISTS idx_price_history_listing ON price_history (listing_id, observed_at);

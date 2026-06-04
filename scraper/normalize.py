@@ -8,6 +8,7 @@ normalize the certificate code, and drop the obfuscated lat/long (where lat == l
 from __future__ import annotations
 
 import re
+from datetime import UTC, datetime
 from typing import Any
 
 from scraper.models import ListingRecord
@@ -92,6 +93,16 @@ def _property_type(label: Any) -> str:
     return _LABEL_TO_TYPE.get(str(label).strip().lower(), "other")
 
 
+def _epoch_to_dt(value: Any) -> datetime | None:
+    """Unix epoch seconds -> timezone-aware UTC datetime; None for non-numeric values."""
+    if not isinstance(value, (int, float)) or isinstance(value, bool):
+        return None
+    try:
+        return datetime.fromtimestamp(value, tz=UTC)
+    except (ValueError, OverflowError, OSError):
+        return None
+
+
 def _coords(lat: Any, lon: Any) -> tuple[float | None, float | None]:
     """Return (lat, lon), or (None, None) when missing or obfuscated (lat == lon)."""
     try:
@@ -143,6 +154,8 @@ def normalize(raw: dict[str, Any]) -> ListingRecord:
         land_area_m2=_parse_area(common.get("landSize")),
         building_area_m2=_parse_area(common.get("builtSize")),
         certificate=_normalize_certificate(common.get("certificate")),
+        listing_created_at=_epoch_to_dt(raw.get("created_ts")),
+        listing_updated_at=_epoch_to_dt(raw.get("updated_ts")),
         extra_specs=_extra_specs(raw),
         agent_name=raw.get("agent_name"),
         raw=raw.get("raw") or {},

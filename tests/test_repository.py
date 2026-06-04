@@ -161,3 +161,24 @@ def test_reconcile_delistings(repo):
         rows = dict(cur.fetchall())
     assert rows["seen"] is True
     assert rows["stale"] is False
+
+
+def test_reconcile_delistings_scoped_to_districts(repo):
+    _, since = repo.start_run()
+    repo.upsert_listing(_make_listing(listing_id="g1", district="Gambir"))
+    repo.upsert_listing(_make_listing(listing_id="s1", district="Sawah Besar"))
+    # both untouched this run (last_seen before run start)
+    with repo.conn.cursor() as cur:
+        cur.execute("UPDATE listings SET last_seen_at = %s", (since - timedelta(days=1),))
+
+    # reconcile only Gambir -> s1 (Sawah Besar) must stay active
+    delisted = repo.reconcile_delistings("rumah123", since, districts=["Gambir"])
+    assert delisted == 1
+    with repo.conn.cursor() as cur:
+        cur.execute("SELECT listing_id, is_active FROM listings ORDER BY listing_id")
+        rows = dict(cur.fetchall())
+    assert rows["g1"] is False
+    assert rows["s1"] is True
+
+    # empty district scope delists nothing
+    assert repo.reconcile_delistings("rumah123", since, districts=[]) == 0

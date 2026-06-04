@@ -44,7 +44,7 @@
 
 ### Jakarta Pusat — `jakarta-pusat` (8 kecamatan)
 - [x] Gambir — 672 listings (2026-06-04)
-- [ ] Sawah Besar
+- [x] Sawah Besar — 528 listings (2026-06-04)
 - [ ] Kemayoran
 - [ ] Senen
 - [ ] Cempaka Putih

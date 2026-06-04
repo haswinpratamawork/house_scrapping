@@ -9,6 +9,7 @@ import pytest
 from scraper.config import Config
 from scraper.db.repository import _LISTING_COLS
 from scraper.normalize import (
+    _epoch_to_dt,
     _parse_area,
     _parse_int,
     _parse_price_text,
@@ -75,6 +76,23 @@ def test_property_type(label, expected):
 
 
 # --- end-to-end on fixtures -------------------------------------------------------
+
+
+def test_epoch_to_dt():
+    dt = _epoch_to_dt(1780476608)
+    assert dt is not None and dt.tzinfo is not None  # tz-aware UTC
+    assert dt.year == 2026
+    assert _epoch_to_dt("$undefined") is None
+    assert _epoch_to_dt(None) is None
+    assert _epoch_to_dt(True) is None  # bools are not real timestamps
+
+
+def test_normalize_extracts_source_dates():
+    rec = normalize(_raw("rumah123_listing_house.html"))
+    assert rec.listing_created_at is not None
+    assert rec.listing_updated_at is not None
+    assert rec.listing_updated_at >= rec.listing_created_at
+    assert rec.listing_updated_at.tzinfo is not None
 
 
 def test_normalize_house():

@@ -6,6 +6,7 @@ Field names match the table columns written by ``Repository.upsert_listing`` exa
 
 from __future__ import annotations
 
+from datetime import datetime
 from typing import Any
 
 from pydantic import BaseModel, Field
@@ -31,6 +32,10 @@ class ListingRecord(BaseModel):
     land_area_m2: float | None = None
     building_area_m2: float | None = None
     certificate: str | None = None
+
+    # Source's own dates from Rumah123 ("dibuat" / "diperbarui").
+    listing_created_at: datetime | None = None
+    listing_updated_at: datetime | None = None
 
     extra_specs: dict[str, Any] = Field(default_factory=dict)
     agent_name: str | None = None

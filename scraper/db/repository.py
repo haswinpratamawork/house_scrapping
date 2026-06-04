@@ -38,6 +38,8 @@ _LISTING_COLS: tuple[str, ...] = (
     "land_area_m2",
     "building_area_m2",
     "certificate",
+    "listing_created_at",
+    "listing_updated_at",
     "extra_specs",
     "agent_name",
     "raw",
@@ -172,19 +174,37 @@ class Repository:
                 )
         return True
 
-    def reconcile_delistings(self, source: str, since: datetime) -> int:
+    def reconcile_delistings(
+        self,
+        source: str,
+        since: datetime,
+        districts: list[str] | None = None,
+    ) -> int:
         """Mark active listings not seen since ``since`` (the run start) as inactive.
 
         Listings touched this run have last_seen_at >= since (set by upsert), so they are
-        left active. Returns the number of listings delisted.
+        left active. ``districts`` scopes the reconcile to only those districts — essential
+        for per-district scrapes, so scraping one district does not delist all the others.
+        With ``districts=None`` the whole source is reconciled. Returns the count delisted.
         """
         with self.conn.cursor() as cur:
-            cur.execute(
-                """
-                UPDATE listings
-                   SET is_active = false
-                 WHERE source = %s AND is_active = true AND last_seen_at < %s
-                """,
-                (source, since),
-            )
+            if districts is None:
+                cur.execute(
+                    """
+                    UPDATE listings SET is_active = false
+                     WHERE source = %s AND is_active = true AND last_seen_at < %s
+                    """,
+                    (source, since),
+                )
+            elif not districts:
+                return 0  # nothing in scope -> delist nothing
+            else:
+                cur.execute(
+                    """
+                    UPDATE listings SET is_active = false
+                     WHERE source = %s AND is_active = true AND last_seen_at < %s
+                       AND district = ANY(%s)
+                    """,
+                    (source, since, districts),
+                )
             return cur.rowcount

@@ -93,6 +93,8 @@ def test_parse_house() -> None:
     assert rec["attrs_common"]["certificate"] == "SHM"
     assert rec["agent_name"]  # from JSON-LD seller
     assert rec["url"].endswith("/")
+    assert isinstance(rec["created_ts"], int)  # Rumah123 "dibuat" epoch
+    assert isinstance(rec["updated_ts"], int)  # Rumah123 "diperbarui" epoch
 
 
 def test_parse_apartment_has_no_land_size() -> None:

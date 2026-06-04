@@ -131,6 +131,23 @@ def test_limit_caps_processing(clean_repo):
     assert _count(clean_repo, "listings") == 2
 
 
+def test_per_district_run_does_not_delist_other_districts(clean_repo):
+    # First populate two Jagakarsa listings via a normal (unscoped) run.
+    _run(clean_repo, FakeFetcher([HOUSE, LAND])).execute()
+    assert _count(clean_repo, "listings") == 2
+
+    # Now scrape a different district (Kuningan) — it must NOT delist Jagakarsa.
+    config = Config(cities=("jakarta-selatan",), property_types=("rumah",))
+    fetcher = FakeFetcher([APART])
+    source = Rumah123Source(config, fetcher, district="kuningan")
+    stats = ScrapeRun(clean_repo, fetcher, source).execute()
+
+    assert stats.delisted == 0
+    with clean_repo.conn.cursor() as cur:
+        cur.execute("SELECT count(*) FROM listings WHERE is_active")
+        assert cur.fetchone()[0] == 3  # 2 Jagakarsa + 1 Kuningan, all still active
+
+
 def test_district_scope_drops_out_of_area(clean_repo):
     # Fixtures: house + land are Jagakarsa; apartment is Kuningan (an out-of-area ad).
     config = Config(cities=("jakarta-selatan",), property_types=("rumah",))

@@ -183,6 +183,7 @@ class Rumah123Source(Source):
         common = attrs.get("common") or {}
         location = listing.get("location") or {}
         price = listing.get("price") or {}
+        time = listing.get("time") or {}
         path = listing.get("url") or ""
 
         return {
@@ -199,6 +200,8 @@ class Rumah123Source(Source):
             "latitude": location.get("latitude"),
             "longitude": location.get("longitude"),
             "listing_type_label": common.get("listingType"),
+            "created_ts": time.get("created"),
+            "updated_ts": time.get("updated"),
             "agent_name": self._agent_name(product),
             "attrs_common": common,
             "attrs_interior": attrs.get("interior") or {},
