@@ -16,7 +16,7 @@
 | DKI Jakarta | Jakarta Barat | Kota | 8 | `jakarta-barat` |
 | DKI Jakarta | Jakarta Selatan | Kota | 10 | `jakarta-selatan` |
 | DKI Jakarta | Jakarta Timur | Kota | 10 | `jakarta-timur` |
-| DKI Jakarta | Kepulauan Seribu | Kab. | 2 | _(islands; n/a for housing)_ |
+| DKI Jakarta | Kepulauan Seribu | Kab. | 2 | `kepulauan-seribu` |
 | Jawa Barat | Kota Bogor | Kota | 6 | `bogor` |
 | Jawa Barat | Kabupaten Bogor | Kab. | 40 | `kabupaten-bogor` |
 | Jawa Barat | Kota Depok | Kota | 11 | `depok` |
@@ -27,7 +27,6 @@
 | Banten | Kabupaten Tangerang | Kab. | 29 | `kabupaten-tangerang` |
 
 **Total: 3 provinces · 14 cities/regencies · 185 kecamatan**
-(183 excluding the 2 island kecamatan of Kepulauan Seribu, which are not relevant to housing.)
 
 > **Scraping note:** the current `config.JABODETABEK_CITIES` covers the 10 core kota slugs
 > (`bogor`/`bekasi`/`tangerang` resolve to the *kota*). The **kabupaten** of Bogor, Bekasi,
@@ -56,7 +55,7 @@ Matraman · Pulogadung · Jatinegara · Kramat Jati · Pasar Rebo · Cakung · D
 
 ### Kepulauan Seribu — 2 kecamatan
 Kepulauan Seribu Utara · Kepulauan Seribu Selatan
-*(Island regency, part of DKI Jakarta; not relevant for house-price scraping.)*
+*(Island regency, part of DKI Jakarta.)*
 
 ---
 
