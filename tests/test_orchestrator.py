@@ -129,3 +129,19 @@ def test_limit_caps_processing(clean_repo):
 
     assert stats.found == 2
     assert _count(clean_repo, "listings") == 2
+
+
+def test_district_scope_drops_out_of_area(clean_repo):
+    # Fixtures: house + land are Jagakarsa; apartment is Kuningan (an out-of-area ad).
+    config = Config(cities=("jakarta-selatan",), property_types=("rumah",))
+    fetcher = FakeFetcher([HOUSE, APART, LAND])
+    source = Rumah123Source(config, fetcher, district="jagakarsa")
+    stats = ScrapeRun(clean_repo, fetcher, source).execute()
+
+    assert stats.found == 3
+    assert stats.skipped == 1          # the Kuningan apartment dropped
+    assert stats.new == 2              # only the two Jagakarsa listings saved
+    assert _count(clean_repo, "listings") == 2
+    with clean_repo.conn.cursor() as cur:
+        cur.execute("SELECT DISTINCT district FROM listings")
+        assert [r[0] for r in cur.fetchall()] == ["Jagakarsa"]

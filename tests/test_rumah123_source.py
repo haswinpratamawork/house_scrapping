@@ -119,3 +119,17 @@ def test_parse_land_has_no_bedrooms() -> None:
 def test_parse_raises_when_no_listing() -> None:
     with pytest.raises(ValueError):
         _source().parse("<html><body>nothing here</body></html>")
+
+
+def test_matches_scope_filters_other_districts() -> None:
+    scoped = Rumah123Source(Config(), _NullFetcher(), district="jagakarsa")
+    assert scoped.matches_scope({"district": "Jagakarsa"}) is True
+    assert scoped.matches_scope({"district": "Alam Sutera"}) is False  # promoted ad
+    assert scoped.matches_scope({"district": None}) is False           # unknown -> drop
+
+    # multi-word district slugifies correctly
+    tanah_abang = Rumah123Source(Config(), _NullFetcher(), district="tanah-abang")
+    assert tanah_abang.matches_scope({"district": "Tanah Abang"}) is True
+
+    # without a district, nothing is filtered
+    assert _source().matches_scope({"district": "Anywhere"}) is True

@@ -37,6 +37,7 @@ class RunStats:
     updated: int = 0
     delisted: int = 0
     errors: int = 0
+    skipped: int = 0  # out-of-scope listings dropped (e.g. promoted out-of-area ads)
     status: str = "completed"
 
 
@@ -82,12 +83,13 @@ class ScrapeRun:
             raise
 
         self._log.info(
-            "run %s done: found=%d new=%d updated=%d delisted=%d errors=%d",
+            "run %s done: found=%d new=%d updated=%d delisted=%d skipped=%d errors=%d",
             run_id,
             stats.found,
             stats.new,
             stats.updated,
             stats.delisted,
+            stats.skipped,
             stats.errors,
         )
         return stats
@@ -95,7 +97,12 @@ class ScrapeRun:
     def _process(self, url: str, stats: RunStats, *, dry_run: bool) -> None:
         try:
             html = self._fetcher.get(url)
-            record = self._normalize(self._source.parse(html))
+            raw = self._source.parse(html)
+            if not self._source.matches_scope(raw):
+                stats.skipped += 1
+                self._log.info("out-of-scope, skip %s", url)
+                return
+            record = self._normalize(raw)
         except Exception as exc:  # one bad listing must not abort the run
             stats.errors += 1
             self._log.warning("skip %s: %s", url, exc)

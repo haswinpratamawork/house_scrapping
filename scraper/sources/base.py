@@ -23,3 +23,11 @@ class Source(ABC):
         Normalization into typed fields happens later (Phase 4); this returns the
         source's values close to as-found. Raises ValueError if no listing is found.
         """
+
+    def matches_scope(self, raw: dict[str, Any]) -> bool:
+        """Whether a parsed raw record falls within this source's requested scope.
+
+        Default: everything is in scope. A source scoped to a district overrides this to
+        reject out-of-area listings (e.g. promoted ads that appear on every results page).
+        """
+        return True

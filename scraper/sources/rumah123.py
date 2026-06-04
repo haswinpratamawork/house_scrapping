@@ -27,6 +27,13 @@ _LD_JSON_RE = re.compile(r'<script type="application/ld\+json">(.*?)</script>', 
 _LISTING_KEY_RE = re.compile(r'"listing":\{')
 
 
+def _slugify(name: str | None) -> str | None:
+    """'Tanah Abang' -> 'tanah-abang'; None/blank -> None."""
+    if not name or not name.strip():
+        return None
+    return re.sub(r"\s+", "-", name.strip().lower())
+
+
 def _reconstruct_rsc(html: str) -> str:
     """Concatenate and unescape the RSC string chunks into one stream."""
     return "".join(json.loads(chunk) for chunk in _RSC_CHUNK_RE.findall(html))
@@ -118,6 +125,16 @@ class Rumah123Source(Source):
         self._district = district
 
     # --- discovery --------------------------------------------------------------
+
+    def matches_scope(self, raw: dict[str, Any]) -> bool:
+        """When scoped to a district, keep only listings whose district matches it.
+
+        Drops promoted/out-of-area ads Rumah123 injects into every results page. A record
+        with an unknown district is dropped (we cannot confirm it belongs).
+        """
+        if not self._district:
+            return True
+        return _slugify(raw.get("district")) == self._district
 
     def extract_listing_urls(self, html: str) -> list[str]:
         """Absolute listing-detail URLs found on an index page (deduped, in order)."""
