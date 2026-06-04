@@ -15,7 +15,7 @@ def test_parse_args_defaults() -> None:
     args = _parse_args([])
     assert args.dry_run is False
     assert args.limit is None
-    assert args.max_pages == 50
+    assert args.max_pages == 150
     assert args.cities is None
     assert args.types is None
 

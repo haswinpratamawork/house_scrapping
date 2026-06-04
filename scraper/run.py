@@ -144,7 +144,7 @@ def build_scrape_run(
     config: Config,
     repository: Repository | None,
     *,
-    max_pages: int = 50,
+    max_pages: int = 150,
     district: str | None = None,
 ) -> ScrapeRun:
     """Construct a production ScrapeRun (httpx fetcher + Rumah123 source)."""
@@ -172,7 +172,7 @@ def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         help="single district/kecamatan slug to scope within --cities (e.g. gambir)",
     )
     parser.add_argument(
-        "--max-pages", type=int, default=50, help="max index pages per city x type"
+        "--max-pages", type=int, default=150, help="max index pages per city x type"
     )
     parser.add_argument(
         "--limit", type=int, help="stop after processing this many listings"

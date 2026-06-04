@@ -119,7 +119,7 @@ class Rumah123Source(Source):
         config: Config,
         fetcher: Fetcher,
         *,
-        max_pages: int = 50,
+        max_pages: int = 150,
         district: str | None = None,
     ) -> None:
         self._config = config
@@ -181,6 +181,15 @@ class Rumah123Source(Source):
             for u in new:
                 seen.add(u)
                 yield u
+        else:
+            # Loop ran every page without an early stop -> the cap was reached and there
+            # may be more listings. Never truncate silently.
+            logger.warning(
+                "hit max_pages=%d for %s %s — results may be truncated; raise --max-pages",
+                self._max_pages,
+                self._district or city,
+                property_type,
+            )
 
     # --- parsing ----------------------------------------------------------------
 
