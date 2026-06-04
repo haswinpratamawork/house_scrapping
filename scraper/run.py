@@ -127,11 +127,15 @@ class ScrapeRun:
 
 
 def build_scrape_run(
-    config: Config, repository: Repository | None, *, max_pages: int = 50
+    config: Config,
+    repository: Repository | None,
+    *,
+    max_pages: int = 50,
+    district: str | None = None,
 ) -> ScrapeRun:
     """Construct a production ScrapeRun (httpx fetcher + Rumah123 source)."""
     fetcher = HttpxFetcher(config)
-    source = Rumah123Source(config, fetcher, max_pages=max_pages)
+    source = Rumah123Source(config, fetcher, max_pages=max_pages, district=district)
     return ScrapeRun(repository, fetcher, source)
 
 
@@ -148,6 +152,10 @@ def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     )
     parser.add_argument(
         "--types", help="comma-separated property-type slugs (e.g. rumah,tanah)"
+    )
+    parser.add_argument(
+        "--district",
+        help="single district/kecamatan slug to scope within --cities (e.g. gambir)",
     )
     parser.add_argument(
         "--max-pages", type=int, default=50, help="max index pages per city x type"
@@ -194,7 +202,9 @@ def main(argv: list[str] | None = None) -> int:
         repository.apply_schema()
 
     try:
-        run = build_scrape_run(config, repository, max_pages=args.max_pages)
+        run = build_scrape_run(
+            config, repository, max_pages=args.max_pages, district=args.district
+        )
         stats = run.execute(limit=args.limit, dry_run=args.dry_run)
     except Exception:
         logger.exception("scrape run failed")

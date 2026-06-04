@@ -1,11 +1,18 @@
-# Jabodetabek Administrative Regions
+# Jabodetabek Administrative Regions — Scraping Checklist
 
-> Reference for scraping coverage: every **province → city/regency → district (kecamatan)**
-> in the Jabodetabek area. "Jabodetabek" = **Ja**karta, **Bo**gor, **De**pok, **Ta**ngerang,
-> **Bek**asi, spanning parts of **3 provinces**.
+> Reference + progress tracker for scraping coverage: every **province → city/regency →
+> district (kecamatan)** in the Jabodetabek area. "Jabodetabek" = **Ja**karta, **Bo**gor,
+> **De**pok, **Ta**ngerang, **Bek**asi, spanning parts of **3 provinces**.
 >
 > District lists for the three large regencies (Kab. Bogor, Bekasi, Tangerang) were verified
 > against Wikipedia (2026-06). Last updated: 2026-06-04.
+
+## How to read this
+
+- `- [ ]` district not yet scraped · `- [x]` district scraped (with listing count + date)
+- Scraped per district via `…/jual/{city}/{district}/{type}/` across all property types
+  (rumah, apartemen, tanah, ruko, gudang).
+- District **slug** = name lowercased with spaces → hyphens (e.g. "Sawah Besar" → `sawah-besar`).
 
 ## Summary
 
@@ -28,75 +35,230 @@
 
 **Total: 3 provinces · 14 cities/regencies · 185 kecamatan**
 
-> **Scraping note:** the current `config.JABODETABEK_CITIES` covers the 10 core kota slugs
-> (`bogor`/`bekasi`/`tangerang` resolve to the *kota*). The **kabupaten** of Bogor, Bekasi,
-> and Tangerang are separate areas on Rumah123 (slugs likely `kabupaten-bogor`, etc.) and are
-> **not yet in the config** — add them when expanding coverage beyond the core cities. Verify
-> each kabupaten slug against the live site before relying on it.
+> **Slug note:** the three **kabupaten** (Bogor/Bekasi/Tangerang) and `kepulauan-seribu` slugs
+> are not yet confirmed against the live site — verify before scraping those.
 
 ---
 
 ## DKI Jakarta (province)
 
-### Jakarta Pusat — 8 kecamatan
-Gambir · Sawah Besar · Kemayoran · Senen · Cempaka Putih · Menteng · Tanah Abang · Johar Baru
+### Jakarta Pusat — `jakarta-pusat` (8 kecamatan)
+- [x] Gambir — 672 listings (2026-06-04)
+- [ ] Sawah Besar
+- [ ] Kemayoran
+- [ ] Senen
+- [ ] Cempaka Putih
+- [ ] Menteng
+- [ ] Tanah Abang
+- [ ] Johar Baru
 
-### Jakarta Utara — 6 kecamatan
-Penjaringan · Pademangan · Tanjung Priok · Koja · Kelapa Gading · Cilincing
+### Jakarta Utara — `jakarta-utara` (6 kecamatan)
+- [ ] Penjaringan
+- [ ] Pademangan
+- [ ] Tanjung Priok
+- [ ] Koja
+- [ ] Kelapa Gading
+- [ ] Cilincing
 
-### Jakarta Barat — 8 kecamatan
-Cengkareng · Grogol Petamburan · Taman Sari · Tambora · Kebon Jeruk · Kalideres · Palmerah · Kembangan
+### Jakarta Barat — `jakarta-barat` (8 kecamatan)
+- [ ] Cengkareng
+- [ ] Grogol Petamburan
+- [ ] Taman Sari
+- [ ] Tambora
+- [ ] Kebon Jeruk
+- [ ] Kalideres
+- [ ] Palmerah
+- [ ] Kembangan
 
-### Jakarta Selatan — 10 kecamatan
-Tebet · Setiabudi · Mampang Prapatan · Pasar Minggu · Kebayoran Lama · Cilandak · Pesanggrahan · Kebayoran Baru · Pancoran · Jagakarsa
+### Jakarta Selatan — `jakarta-selatan` (10 kecamatan)
+- [ ] Tebet
+- [ ] Setiabudi
+- [ ] Mampang Prapatan
+- [ ] Pasar Minggu
+- [ ] Kebayoran Lama
+- [ ] Cilandak
+- [ ] Pesanggrahan
+- [ ] Kebayoran Baru
+- [ ] Pancoran
+- [ ] Jagakarsa
 
-### Jakarta Timur — 10 kecamatan
-Matraman · Pulogadung · Jatinegara · Kramat Jati · Pasar Rebo · Cakung · Duren Sawit · Makasar · Ciracas · Cipayung
+### Jakarta Timur — `jakarta-timur` (10 kecamatan)
+- [ ] Matraman
+- [ ] Pulogadung
+- [ ] Jatinegara
+- [ ] Kramat Jati
+- [ ] Pasar Rebo
+- [ ] Cakung
+- [ ] Duren Sawit
+- [ ] Makasar
+- [ ] Ciracas
+- [ ] Cipayung
 
-### Kepulauan Seribu — 2 kecamatan
-Kepulauan Seribu Utara · Kepulauan Seribu Selatan
-*(Island regency, part of DKI Jakarta.)*
+### Kepulauan Seribu — `kepulauan-seribu` (2 kecamatan)
+- [ ] Kepulauan Seribu Utara
+- [ ] Kepulauan Seribu Selatan
 
 ---
 
 ## Jawa Barat (West Java) — Jabodetabek portion
 
-### Kota Bogor — 6 kecamatan
-Bogor Selatan · Bogor Timur · Bogor Utara · Bogor Tengah · Bogor Barat · Tanah Sareal
+### Kota Bogor — `bogor` (6 kecamatan)
+- [ ] Bogor Selatan
+- [ ] Bogor Timur
+- [ ] Bogor Utara
+- [ ] Bogor Tengah
+- [ ] Bogor Barat
+- [ ] Tanah Sareal
 
-### Kabupaten Bogor — 40 kecamatan
-Nanggung · Leuwiliang · Leuwisadeng · Pamijahan · Cibungbulang · Ciampea · Tenjolaya · Dramaga ·
-Ciomas · Tamansari · Cijeruk · Cigombong · Caringin · Ciawi · Cisarua · Megamendung · Sukaraja ·
-Babakan Madang · Sukamakmur · Cariu · Tanjungsari · Jonggol · Cileungsi · Klapanunggal ·
-Gunung Putri · Citeureup · Cibinong · Bojonggede · Tajurhalang · Kemang · Rancabungur · Parung ·
-Ciseeng · Gunungsindur · Rumpin · Cigudeg · Sukajaya · Jasinga · Tenjo · Parung Panjang
+### Kabupaten Bogor — `kabupaten-bogor` (40 kecamatan)
+- [ ] Nanggung
+- [ ] Leuwiliang
+- [ ] Leuwisadeng
+- [ ] Pamijahan
+- [ ] Cibungbulang
+- [ ] Ciampea
+- [ ] Tenjolaya
+- [ ] Dramaga
+- [ ] Ciomas
+- [ ] Tamansari
+- [ ] Cijeruk
+- [ ] Cigombong
+- [ ] Caringin
+- [ ] Ciawi
+- [ ] Cisarua
+- [ ] Megamendung
+- [ ] Sukaraja
+- [ ] Babakan Madang
+- [ ] Sukamakmur
+- [ ] Cariu
+- [ ] Tanjungsari
+- [ ] Jonggol
+- [ ] Cileungsi
+- [ ] Klapanunggal
+- [ ] Gunung Putri
+- [ ] Citeureup
+- [ ] Cibinong
+- [ ] Bojonggede
+- [ ] Tajurhalang
+- [ ] Kemang
+- [ ] Rancabungur
+- [ ] Parung
+- [ ] Ciseeng
+- [ ] Gunungsindur
+- [ ] Rumpin
+- [ ] Cigudeg
+- [ ] Sukajaya
+- [ ] Jasinga
+- [ ] Tenjo
+- [ ] Parung Panjang
 
-### Kota Depok — 11 kecamatan
-Sawangan · Bojongsari · Pancoran Mas · Cipayung · Sukmajaya · Cilodong · Cimanggis · Tapos · Beji · Limo · Cinere
+### Kota Depok — `depok` (11 kecamatan)
+- [ ] Sawangan
+- [ ] Bojongsari
+- [ ] Pancoran Mas
+- [ ] Cipayung
+- [ ] Sukmajaya
+- [ ] Cilodong
+- [ ] Cimanggis
+- [ ] Tapos
+- [ ] Beji
+- [ ] Limo
+- [ ] Cinere
 
-### Kota Bekasi — 12 kecamatan
-Pondok Gede · Jati Sampurna · Pondok Melati · Jati Asih · Bantar Gebang · Mustika Jaya ·
-Bekasi Timur · Rawalumbu · Bekasi Selatan · Bekasi Barat · Medan Satria · Bekasi Utara
+### Kota Bekasi — `bekasi` (12 kecamatan)
+- [ ] Pondok Gede
+- [ ] Jati Sampurna
+- [ ] Pondok Melati
+- [ ] Jati Asih
+- [ ] Bantar Gebang
+- [ ] Mustika Jaya
+- [ ] Bekasi Timur
+- [ ] Rawalumbu
+- [ ] Bekasi Selatan
+- [ ] Bekasi Barat
+- [ ] Medan Satria
+- [ ] Bekasi Utara
 
-### Kabupaten Bekasi — 23 kecamatan
-Setu · Serang Baru · Cikarang Pusat · Cikarang Selatan · Cibarusah · Bojongmangu · Cikarang Timur ·
-Kedungwaringin · Cikarang Utara · Karangbahagia · Cibitung · Cikarang Barat · Tambun Selatan ·
-Tambun Utara · Babelan · Tarumajaya · Tambelang · Sukawangi · Sukatani · Sukakarya · Pebayuran ·
-Cabangbungin · Muara Gembong
+### Kabupaten Bekasi — `kabupaten-bekasi` (23 kecamatan)
+- [ ] Setu
+- [ ] Serang Baru
+- [ ] Cikarang Pusat
+- [ ] Cikarang Selatan
+- [ ] Cibarusah
+- [ ] Bojongmangu
+- [ ] Cikarang Timur
+- [ ] Kedungwaringin
+- [ ] Cikarang Utara
+- [ ] Karangbahagia
+- [ ] Cibitung
+- [ ] Cikarang Barat
+- [ ] Tambun Selatan
+- [ ] Tambun Utara
+- [ ] Babelan
+- [ ] Tarumajaya
+- [ ] Tambelang
+- [ ] Sukawangi
+- [ ] Sukatani
+- [ ] Sukakarya
+- [ ] Pebayuran
+- [ ] Cabangbungin
+- [ ] Muara Gembong
 
 ---
 
 ## Banten — Jabodetabek portion
 
-### Kota Tangerang — 13 kecamatan
-Ciledug · Larangan · Karang Tengah · Cipondoh · Pinang · Tangerang · Karawaci · Jatiuwung ·
-Cibodas · Periuk · Batuceper · Neglasari · Benda
+### Kota Tangerang — `tangerang` (13 kecamatan)
+- [ ] Ciledug
+- [ ] Larangan
+- [ ] Karang Tengah
+- [ ] Cipondoh
+- [ ] Pinang
+- [ ] Tangerang
+- [ ] Karawaci
+- [ ] Jatiuwung
+- [ ] Cibodas
+- [ ] Periuk
+- [ ] Batuceper
+- [ ] Neglasari
+- [ ] Benda
 
-### Kota Tangerang Selatan — 7 kecamatan
-Serpong · Serpong Utara · Pondok Aren · Ciputat · Ciputat Timur · Pamulang · Setu
+### Kota Tangerang Selatan — `tangerang-selatan` (7 kecamatan)
+- [ ] Serpong
+- [ ] Serpong Utara
+- [ ] Pondok Aren
+- [ ] Ciputat
+- [ ] Ciputat Timur
+- [ ] Pamulang
+- [ ] Setu
 
-### Kabupaten Tangerang — 29 kecamatan
-Balaraja · Jayanti · Tigaraksa · Jambe · Cisoka · Solear · Kronjo · Mekarbaru · Mauk · Kemiri ·
-Sukadiri · Rajeg · Sepatan · Sepatan Timur · Pakuhaji · Teluknaga · Kosambi · Pasar Kemis ·
-Cikupa · Panongan · Curug · Cisauk · Pagedangan · Legok · Kelapa Dua · Sindang Jaya ·
-Sukamulya · Kresek · Gunung Kaler
+### Kabupaten Tangerang — `kabupaten-tangerang` (29 kecamatan)
+- [ ] Balaraja
+- [ ] Jayanti
+- [ ] Tigaraksa
+- [ ] Jambe
+- [ ] Cisoka
+- [ ] Solear
+- [ ] Kronjo
+- [ ] Mekarbaru
+- [ ] Mauk
+- [ ] Kemiri
+- [ ] Sukadiri
+- [ ] Rajeg
+- [ ] Sepatan
+- [ ] Sepatan Timur
+- [ ] Pakuhaji
+- [ ] Teluknaga
+- [ ] Kosambi
+- [ ] Pasar Kemis
+- [ ] Cikupa
+- [ ] Panongan
+- [ ] Curug
+- [ ] Cisauk
+- [ ] Pagedangan
+- [ ] Legok
+- [ ] Kelapa Dua
+- [ ] Sindang Jaya
+- [ ] Sukamulya
+- [ ] Kresek
+- [ ] Gunung Kaler

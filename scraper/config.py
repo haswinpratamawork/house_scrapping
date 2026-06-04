@@ -88,9 +88,20 @@ class Config:
             base_url=os.getenv("BASE_URL", DEFAULT_BASE_URL),
         )
 
-    def index_url(self, city: str, property_type: str, page: int = 1) -> str:
-        """URL of a for-sale listing index page for a city + property type."""
-        base = f"{self.base_url}/jual/{city}/{property_type}/"
+    def index_url(
+        self,
+        city: str,
+        property_type: str,
+        page: int = 1,
+        district: str | None = None,
+    ) -> str:
+        """URL of a for-sale listing index page.
+
+        City level: ``/jual/{city}/{type}/``; district level (when ``district`` given):
+        ``/jual/{city}/{district}/{type}/``.
+        """
+        location = f"{city}/{district}" if district else city
+        base = f"{self.base_url}/jual/{location}/{property_type}/"
         return base if page <= 1 else f"{base}?page={page}"
 
     @staticmethod

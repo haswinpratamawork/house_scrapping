@@ -73,6 +73,18 @@ def test_index_url_format() -> None:
     assert cfg.index_url("depok", "tanah", page=1) == f"{DEFAULT_BASE_URL}/jual/depok/tanah/"
 
 
+def test_index_url_with_district() -> None:
+    cfg = Config.from_env()
+    assert (
+        cfg.index_url("jakarta-pusat", "rumah", district="gambir")
+        == f"{DEFAULT_BASE_URL}/jual/jakarta-pusat/gambir/rumah/"
+    )
+    assert (
+        cfg.index_url("jakarta-pusat", "rumah", page=2, district="gambir")
+        == f"{DEFAULT_BASE_URL}/jual/jakarta-pusat/gambir/rumah/?page=2"
+    )
+
+
 def test_config_is_immutable() -> None:
     cfg = Config.from_env()
     with pytest.raises(dataclasses.FrozenInstanceError):

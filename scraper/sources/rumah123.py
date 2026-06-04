@@ -104,10 +104,18 @@ def _find_listing_object(stream: str, prefer_id: str | None) -> dict[str, Any] |
 class Rumah123Source(Source):
     name = "rumah123"
 
-    def __init__(self, config: Config, fetcher: Fetcher, *, max_pages: int = 50) -> None:
+    def __init__(
+        self,
+        config: Config,
+        fetcher: Fetcher,
+        *,
+        max_pages: int = 50,
+        district: str | None = None,
+    ) -> None:
         self._config = config
         self._fetcher = fetcher
         self._max_pages = max_pages
+        self._district = district
 
     # --- discovery --------------------------------------------------------------
 
@@ -128,7 +136,7 @@ class Rumah123Source(Source):
         self, city: str, property_type: str, seen: set[str]
     ) -> Iterator[str]:
         for page in range(1, self._max_pages + 1):
-            url = self._config.index_url(city, property_type, page)
+            url = self._config.index_url(city, property_type, page, district=self._district)
             try:
                 html = self._fetcher.get(url)
             except FetchError:
