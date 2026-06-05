@@ -50,7 +50,7 @@
 - [ ] Cempaka Putih
 - [ ] Menteng
 - [ ] Tanah Abang
-- [ ] Johar Baru
+- [x] Johar Baru — 357 listings (2026-06-05)
 
 ### Jakarta Utara — `jakarta-utara` (6 kecamatan)
 - [ ] Penjaringan
