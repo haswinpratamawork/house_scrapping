@@ -48,7 +48,7 @@
 - [x] Kemayoran — 2,879 listings / 2,519 active (2026-06-05)
 - [x] Senen — 1,183 listings (2026-06-05)
 - [x] Cempaka Putih — 1,723 listings (2026-06-06)
-- [ ] Menteng
+- [x] Menteng — 1,937 listings (2026-06-06)
 - [ ] Tanah Abang
 - [x] Johar Baru — 357 listings (2026-06-05)
 
