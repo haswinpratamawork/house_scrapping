@@ -96,7 +96,7 @@
 
 ### Kepulauan Seribu — `kepulauan-seribu` (2 kecamatan)
 - [x] Kepulauan Seribu Utara — 20 listings (2026-06-07)
-- [ ] Kepulauan Seribu Selatan
+- [x] Kepulauan Seribu Selatan — 5 listings (2026-06-07)
 
 ---
 
