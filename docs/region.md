@@ -53,7 +53,7 @@
 - [x] Johar Baru — 357 listings (2026-06-05)
 
 ### Jakarta Utara — `jakarta-utara` (6 kecamatan)
-- [ ] Penjaringan
+- [x] Penjaringan — 1,866 listings (2026-06-07)
 - [ ] Pademangan
 - [ ] Tanjung Priok
 - [ ] Koja
