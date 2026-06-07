@@ -148,6 +148,17 @@ def test_per_district_run_does_not_delist_other_districts(clean_repo):
         assert cur.fetchone()[0] == 3  # 2 Jagakarsa + 1 Kuningan, all still active
 
 
+def test_no_delist_flag_skips_reconcile(clean_repo):
+    # Pre-populate two Jagakarsa listings.
+    _run(clean_repo, FakeFetcher([HOUSE, LAND])).execute()
+    # A clean run that only sees HOUSE, but with no_delist -> LAND must stay active.
+    stats = _run(clean_repo, FakeFetcher([HOUSE])).execute(no_delist=True)
+    assert stats.delisted == 0
+    with clean_repo.conn.cursor() as cur:
+        cur.execute("SELECT count(*) FROM listings WHERE is_active")
+        assert cur.fetchone()[0] == 2
+
+
 def test_incomplete_discovery_skips_delisting(clean_repo):
     # Pre-populate two Jagakarsa listings with a clean run.
     _run(clean_repo, FakeFetcher([HOUSE, LAND])).execute()

@@ -57,7 +57,9 @@ class ScrapeRun:
         self._normalize = normalize
         self._log = log
 
-    def execute(self, *, limit: int | None = None, dry_run: bool = False) -> RunStats:
+    def execute(
+        self, *, limit: int | None = None, dry_run: bool = False, no_delist: bool = False
+    ) -> RunStats:
         run_id: int | None = None
         started_at = None
         if not dry_run:
@@ -73,7 +75,11 @@ class ScrapeRun:
                 self._process(url, stats, seen_districts, dry_run=dry_run)
 
             if not dry_run:
-                if getattr(self._source, "discovery_incomplete", False):
+                if no_delist:
+                    # Caller scraped only a subset (e.g. a few property types) — don't
+                    # delist, or the un-scraped listings would be wrongly deactivated.
+                    self._log.info("delisting disabled (--no-delist)")
+                elif getattr(self._source, "discovery_incomplete", False):
                     # A partial crawl can't distinguish "gone from market" from "never
                     # fetched" — skip delisting to avoid wrongly deactivating listings.
                     stats.status = "completed_with_errors"
@@ -190,6 +196,11 @@ def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         action="store_true",
         help="discover/fetch/parse but write nothing to the database",
     )
+    parser.add_argument(
+        "--no-delist",
+        action="store_true",
+        help="skip delisting reconcile (use when scraping only a subset of types)",
+    )
     parser.add_argument("--log-level", default="INFO", help="logging level")
     return parser.parse_args(argv)
 
@@ -227,7 +238,9 @@ def main(argv: list[str] | None = None) -> int:
         run = build_scrape_run(
             config, repository, max_pages=args.max_pages, district=args.district
         )
-        stats = run.execute(limit=args.limit, dry_run=args.dry_run)
+        stats = run.execute(
+            limit=args.limit, dry_run=args.dry_run, no_delist=args.no_delist
+        )
     except Exception:
         logger.exception("scrape run failed")
         return 1
