@@ -148,6 +148,40 @@ def test_per_district_run_does_not_delist_other_districts(clean_repo):
         assert cur.fetchone()[0] == 3  # 2 Jagakarsa + 1 Kuningan, all still active
 
 
+def test_incomplete_discovery_skips_delisting(clean_repo):
+    # Pre-populate two Jagakarsa listings with a clean run.
+    _run(clean_repo, FakeFetcher([HOUSE, LAND])).execute()
+    assert _count(clean_repo, "listings") == 2
+
+    # Degraded run: index p1 returns only HOUSE, p2 errors (simulated network drop).
+    class FlakyFetcher(Fetcher):
+        def __init__(self) -> None:
+            self.house = (FIXTURES / "rumah123_listing_house.html").read_text()
+            self.index = _index_html([HOUSE])
+
+        def get(self, url: str) -> str:
+            if url == BASE + HOUSE:
+                return self.house
+            if "page=2" in url:
+                raise FetchError("network drop")
+            if "/jual/" in url:
+                return self.index
+            raise FetchError(url)
+
+    config = Config(cities=("jakarta-selatan",), property_types=("rumah",))
+    fetcher = FlakyFetcher()
+    source = Rumah123Source(config, fetcher)
+    stats = ScrapeRun(clean_repo, fetcher, source).execute()
+
+    assert source.discovery_incomplete is True
+    assert stats.status == "completed_with_errors"
+    assert stats.delisted == 0
+    # LAND was not re-seen but must stay active — no false delisting on a partial crawl.
+    with clean_repo.conn.cursor() as cur:
+        cur.execute("SELECT count(*) FROM listings WHERE is_active")
+        assert cur.fetchone()[0] == 2
+
+
 def test_district_scope_drops_out_of_area(clean_repo):
     # Fixtures: house + land are Jagakarsa; apartment is Kuningan (an out-of-area ad).
     config = Config(cities=("jakarta-selatan",), property_types=("rumah",))

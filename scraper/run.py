@@ -73,12 +73,20 @@ class ScrapeRun:
                 self._process(url, stats, seen_districts, dry_run=dry_run)
 
             if not dry_run:
-                # Only reconcile districts we actually scraped, so a per-district run
-                # never delists the other districts.
-                stats.delisted = self._repo.reconcile_delistings(
-                    self._source.name, started_at, districts=sorted(seen_districts)
-                )
-                self._finish(stats, "completed")
+                if getattr(self._source, "discovery_incomplete", False):
+                    # A partial crawl can't distinguish "gone from market" from "never
+                    # fetched" — skip delisting to avoid wrongly deactivating listings.
+                    stats.status = "completed_with_errors"
+                    self._log.warning(
+                        "discovery incomplete (index fetch failures) — skipping delisting"
+                    )
+                else:
+                    # Only reconcile districts we actually scraped, so a per-district run
+                    # never delists the other districts.
+                    stats.delisted = self._repo.reconcile_delistings(
+                        self._source.name, started_at, districts=sorted(seen_districts)
+                    )
+                self._finish(stats, stats.status)
         except Exception:
             stats.status = "failed"
             if not dry_run:

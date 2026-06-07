@@ -11,6 +11,9 @@ class Source(ABC):
     """A property-listing source (one website)."""
 
     name: str
+    # Set True by discover() if any index page failed to fetch (e.g. network/rate-limit),
+    # meaning the crawl is partial and delisting must NOT run (can't tell gone vs unseen).
+    discovery_incomplete: bool = False
 
     @abstractmethod
     def discover(self) -> Iterator[str]:

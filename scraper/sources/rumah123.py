@@ -126,6 +126,7 @@ class Rumah123Source(Source):
         self._fetcher = fetcher
         self._max_pages = max_pages
         self._district = district
+        self.discovery_incomplete = False
 
     # --- discovery --------------------------------------------------------------
 
@@ -147,6 +148,7 @@ class Rumah123Source(Source):
         return list(seen)
 
     def discover(self) -> Iterator[str]:
+        self.discovery_incomplete = False
         seen: set[str] = set()
         for city in self._config.cities:
             for property_type in self._config.property_types:
@@ -160,8 +162,9 @@ class Rumah123Source(Source):
             try:
                 html = self._fetcher.get(url)
             except FetchError as exc:
-                # An index fetch failed (e.g. rate-limited). On page 1 the whole property
-                # type is at risk of being skipped — log loudly so it isn't silent.
+                # An index fetch failed (e.g. network/rate-limit). The crawl is now
+                # partial — flag it so the orchestrator skips delisting.
+                self.discovery_incomplete = True
                 level = logging.WARNING if page == 1 else logging.INFO
                 logger.log(
                     level,
