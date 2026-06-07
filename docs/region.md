@@ -49,7 +49,7 @@
 - [x] Senen — 1,183 listings (2026-06-05)
 - [x] Cempaka Putih — 1,723 listings (2026-06-06)
 - [x] Menteng — 1,937 listings (2026-06-06)
-- [ ] Tanah Abang
+- [x] Tanah Abang — 1,618 listings (2026-06-07)
 - [x] Johar Baru — 357 listings (2026-06-05)
 
 ### Jakarta Utara — `jakarta-utara` (6 kecamatan)
