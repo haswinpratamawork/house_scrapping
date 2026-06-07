@@ -95,7 +95,7 @@
 - [ ] Cipayung
 
 ### Kepulauan Seribu — `kepulauan-seribu` (2 kecamatan)
-- [ ] Kepulauan Seribu Utara
+- [x] Kepulauan Seribu Utara — 20 listings (2026-06-07)
 - [ ] Kepulauan Seribu Selatan
 
 ---
