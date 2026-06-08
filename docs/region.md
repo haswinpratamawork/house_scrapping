@@ -57,7 +57,7 @@
 - [x] Pademangan — 1,755 listings (2026-06-08)
 - [x] Tanjung Priok — 1,173 listings (2026-06-08)
 - [x] Koja — 402 listings (2026-06-08)
-- [ ] Kelapa Gading
+- [x] Kelapa Gading — 3,015 listings (2026-06-08)
 - [ ] Cilincing
 
 ### Jakarta Barat — `jakarta-barat` (8 kecamatan)
