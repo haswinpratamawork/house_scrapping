@@ -54,7 +54,7 @@
 
 ### Jakarta Utara — `jakarta-utara` (6 kecamatan)
 - [x] Penjaringan — 1,866 listings (2026-06-07)
-- [ ] Pademangan
+- [x] Pademangan — 1,755 listings (2026-06-08)
 - [ ] Tanjung Priok
 - [ ] Koja
 - [ ] Kelapa Gading
