@@ -56,7 +56,7 @@
 - [x] Penjaringan — 1,866 listings (2026-06-07)
 - [x] Pademangan — 1,755 listings (2026-06-08)
 - [x] Tanjung Priok — 1,173 listings (2026-06-08)
-- [ ] Koja
+- [x] Koja — 402 listings (2026-06-08)
 - [ ] Kelapa Gading
 - [ ] Cilincing
 
