@@ -21,8 +21,8 @@ pip install -e ".[api]"        # installs fastapi + uvicorn
 ## Run
 
 ```bash
-./run_api.sh                 # serves on 0.0.0.0:8000 (auto-reload)
-./run_api.sh 127.0.0.1 9000  # custom host + port
+./api/run_api.sh                 # serves on 0.0.0.0:8000 (auto-reload)
+./api/run_api.sh 127.0.0.1 9000  # custom host + port
 # or directly:
 uvicorn api.main:app --reload --port 8000
 ```

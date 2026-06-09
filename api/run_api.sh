@@ -1,13 +1,15 @@
 #!/usr/bin/env bash
 # Start the Rumah123 listing-extractor API (FastAPI + uvicorn).
 #
-# Usage:
-#   ./run_api.sh                # serve on 0.0.0.0:8000
-#   ./run_api.sh 127.0.0.1 9000 # custom host + port
-#   HOST=0.0.0.0 PORT=8000 RELOAD=1 ./run_api.sh
+# Usage (from anywhere):
+#   ./api/run_api.sh                # serve on 0.0.0.0:8000
+#   ./api/run_api.sh 127.0.0.1 9000 # custom host + port
+#   HOST=0.0.0.0 PORT=8000 RELOAD=1 ./api/run_api.sh
 set -euo pipefail
 
-cd "$(dirname "$0")"
+# The script lives in api/, but uvicorn must run from the repo root so the `api`
+# package and the project .venv resolve.
+cd "$(dirname "$0")/.."
 
 HOST="${1:-${HOST:-0.0.0.0}}"
 PORT="${2:-${PORT:-8000}}"
