@@ -20,6 +20,11 @@ dependencies = [
 dev = [
     "pytest>=8.0",
     "ruff>=0.5",
+    "fastapi>=0.110",
+]
+api = [
+    "fastapi>=0.110",
+    "uvicorn[standard]>=0.29",
 ]
 
 [project.scripts]
@@ -34,6 +39,10 @@ target-version = "py311"
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B"]
+
+[tool.ruff.lint.per-file-ignores]
+# FastAPI uses Depends()/Query() as argument defaults by design.
+"api/main.py" = ["B008"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
