@@ -20,10 +20,32 @@ pip install -e ".[api]"        # installs fastapi + uvicorn
 
 ## Run
 
+Use the launcher script `run_api.sh` (it lives in `api/` but `cd`s to the repo root so
+the `api` package and the project `.venv` resolve — run it from the project root):
+
 ```bash
-./api/run_api.sh                 # serves on 0.0.0.0:8000 (auto-reload)
-./api/run_api.sh 127.0.0.1 9000  # custom host + port
-# or directly:
+./api/run_api.sh                 # serve on 0.0.0.0:8000 with auto-reload (dev)
+./api/run_api.sh 127.0.0.1 9000  # custom host + port (positional args)
+```
+
+It picks up the project `.venv` automatically and warns if `GOOGLE_MAPS_API_KEY` is empty.
+
+**Arguments / environment variables:**
+
+| | Default | Meaning |
+|---|---------|---------|
+| arg 1 / `HOST` | `0.0.0.0` | bind host |
+| arg 2 / `PORT` | `8000` | bind port |
+| `RELOAD` | `1` | `1` = auto-reload on code change (dev); `0` = production |
+
+```bash
+RELOAD=0 ./api/run_api.sh             # production mode (no auto-reload)
+HOST=127.0.0.1 PORT=9000 ./api/run_api.sh
+```
+
+Or run uvicorn directly without the script:
+
+```bash
 uvicorn api.main:app --reload --port 8000
 ```
 
@@ -37,8 +59,8 @@ curl "http://localhost:8000/extract?url=https://www.rumah123.com/properti/jakart
 {
   "luas_tanah": 294.0,
   "luas_bangunan": 482.0,
-  "kode_pos": "10410",
-  "kelurahan": "Senen"
+  "kode_pos": "10430",
+  "kelurahan": "Kenari"
 }
 ```
 
