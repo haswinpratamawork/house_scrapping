@@ -61,7 +61,7 @@
 - [x] Cilincing — 1,161 listings (2026-06-08)
 
 ### Jakarta Barat — `jakarta-barat` (8 kecamatan)
-- [ ] Cengkareng
+- [x] Cengkareng — 7,101 listings (2026-06-09)
 - [ ] Grogol Petamburan
 - [ ] Taman Sari
 - [ ] Tambora
