@@ -64,6 +64,19 @@ docker run -p 9000:9000 -e GOOGLE_MAPS_API_KEY=AIza... collateral_scrapping
 - Override the port with `-e PORT=9000` (and map it: `-p 9000:9000`).
 - Image is ~310 MB and runs as a non-root user, with a `/health` HEALTHCHECK.
 
+Run it **detached** (named, restarts with Docker) and manage it:
+
+```bash
+docker run -d --name collateral_scrapping --restart unless-stopped \
+  -p 9000:9000 -e GOOGLE_MAPS_API_KEY=AIza... collateral_scrapping
+
+docker ps                       # status (health)
+docker logs -f collateral_scrapping   # follow logs
+docker stop collateral_scrapping      # stop
+docker start collateral_scrapping     # start again
+docker rm -f collateral_scrapping     # remove
+```
+
 ## Use
 
 ```bash
