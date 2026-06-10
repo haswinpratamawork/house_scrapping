@@ -24,7 +24,7 @@ Use the launcher script `run_api.sh` (it lives in `api/` but `cd`s to the repo r
 the `api` package and the project `.venv` resolve — run it from the project root):
 
 ```bash
-./api/run_api.sh                 # serve on 0.0.0.0:8000 with auto-reload (dev)
+./api/run_api.sh                 # serve on 0.0.0.0:9000 with auto-reload (dev)
 ./api/run_api.sh 127.0.0.1 9000  # custom host + port (positional args)
 ```
 
@@ -35,7 +35,7 @@ It picks up the project `.venv` automatically and warns if `GOOGLE_MAPS_API_KEY`
 | | Default | Meaning |
 |---|---------|---------|
 | arg 1 / `HOST` | `0.0.0.0` | bind host |
-| arg 2 / `PORT` | `8000` | bind port |
+| arg 2 / `PORT` | `9000` | bind port |
 | `RELOAD` | `1` | `1` = auto-reload on code change (dev); `0` = production |
 
 ```bash
@@ -46,7 +46,7 @@ HOST=127.0.0.1 PORT=9000 ./api/run_api.sh
 Or run uvicorn directly without the script:
 
 ```bash
-uvicorn api.main:app --reload --port 8000
+uvicorn api.main:app --reload --port 9000
 ```
 
 ## Docker
@@ -55,8 +55,8 @@ The API imports the `scraper` package, so **build from the repo root** (the Dock
 lives in `api/` but needs the whole project as context):
 
 ```bash
-docker build -f api/Dockerfile -t rumah123-api .
-docker run -p 8000:8000 -e GOOGLE_MAPS_API_KEY=AIza... rumah123-api
+docker build -f api/Dockerfile -t collateral_scrapping .
+docker run -p 9000:9000 -e GOOGLE_MAPS_API_KEY=AIza... collateral_scrapping
 ```
 
 - Pass the key at **runtime** with `-e GOOGLE_MAPS_API_KEY=...` (it is never baked into the
@@ -67,7 +67,7 @@ docker run -p 8000:8000 -e GOOGLE_MAPS_API_KEY=AIza... rumah123-api
 ## Use
 
 ```bash
-curl "http://localhost:8000/extract?url=https://www.rumah123.com/properti/jakarta-pusat/hos41138420/"
+curl "http://localhost:9000/extract?url=https://www.rumah123.com/properti/jakarta-pusat/hos41138420/"
 ```
 
 ```json
@@ -79,7 +79,7 @@ curl "http://localhost:8000/extract?url=https://www.rumah123.com/properti/jakart
 }
 ```
 
-Interactive docs: http://localhost:8000/docs · Health check: `GET /health`
+Interactive docs: http://localhost:9000/docs · Health check: `GET /health`
 
 ## Responses
 
