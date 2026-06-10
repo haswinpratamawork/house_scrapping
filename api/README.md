@@ -81,6 +81,12 @@ curl "http://localhost:9000/extract?url=https://www.rumah123.com/properti/jakart
 
 Interactive docs: http://localhost:9000/docs · Health check: `GET /health`
 
+### Postman
+
+Import [`collateral_scrapping.postman_collection.json`](./collateral_scrapping.postman_collection.json)
+(File → Import). It has the `/health` and `/extract` requests plus example responses. Set the
+collection variables `base_url` (default `http://localhost:9000`) and `listing_url`.
+
 ## Responses
 
 | Status | Meaning |
