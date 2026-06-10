@@ -49,6 +49,21 @@ Or run uvicorn directly without the script:
 uvicorn api.main:app --reload --port 8000
 ```
 
+## Docker
+
+The API imports the `scraper` package, so **build from the repo root** (the Dockerfile
+lives in `api/` but needs the whole project as context):
+
+```bash
+docker build -f api/Dockerfile -t rumah123-api .
+docker run -p 8000:8000 -e GOOGLE_MAPS_API_KEY=AIza... rumah123-api
+```
+
+- Pass the key at **runtime** with `-e GOOGLE_MAPS_API_KEY=...` (it is never baked into the
+  image; `.env` is excluded via `.dockerignore`).
+- Override the port with `-e PORT=9000` (and map it: `-p 9000:9000`).
+- Image is ~310 MB and runs as a non-root user, with a `/health` HEALTHCHECK.
+
 ## Use
 
 ```bash
