@@ -2,9 +2,9 @@
 # Start the Rumah123 listing-extractor API (FastAPI + uvicorn).
 #
 # Usage (from anywhere):
-#   ./api/run_api.sh                # serve on 0.0.0.0:5000
+#   ./api/run_api.sh                # serve on 0.0.0.0:8000
 #   ./api/run_api.sh 127.0.0.1 9100 # custom host + port
-#   HOST=0.0.0.0 PORT=5000 RELOAD=1 ./api/run_api.sh
+#   HOST=0.0.0.0 PORT=8000 RELOAD=1 ./api/run_api.sh
 set -euo pipefail
 
 # The script lives in api/, but uvicorn must run from the repo root so the `api`
@@ -12,7 +12,7 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 
 HOST="${1:-${HOST:-0.0.0.0}}"
-PORT="${2:-${PORT:-5000}}"
+PORT="${2:-${PORT:-8000}}"
 RELOAD="${RELOAD:-1}"   # 1 = auto-reload on code change (dev); set 0 for production
 
 # Prefer the project virtualenv if present.
