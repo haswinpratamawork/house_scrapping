@@ -9,17 +9,17 @@ FROM python:3.13-slim
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
     PIP_NO_CACHE_DIR=1 \
+    PYTHONPATH=/app \
     PORT=8020
 
 WORKDIR /app
 
-# Install dependencies first so this layer caches unless pyproject/scraper change.
-# (Building the project needs pyproject.toml + the scraper package.)
-COPY pyproject.toml ./
-COPY scraper/ ./scraper/
-RUN pip install ".[api]"
+# Install pinned dependencies first so this layer caches unless requirements.txt changes.
+COPY requirements.txt ./
+RUN pip install -r requirements.txt
 
-# App code last — it changes most often.
+# App code (the scraper + api packages run from /app via PYTHONPATH).
+COPY scraper/ ./scraper/
 COPY api/ ./api/
 
 # Run as a non-root user.

@@ -13,10 +13,15 @@ A small HTTP service: given a **Rumah123 listing URL**, it returns the listing's
 ## Setup
 
 ```bash
-pip install -e ".[api]"        # installs fastapi + uvicorn
+pip install -r requirements.txt   # pinned runtime deps (scraper + api)
+# or for local dev (editable + test tools): pip install -e ".[dev]"
+
 # add your key to .env:
 #   GOOGLE_MAPS_API_KEY=AIza...
 ```
+
+Dependencies are pinned in [`requirements.txt`](../requirements.txt) (repo root); the
+Docker image installs from it.
 
 ## Run
 
