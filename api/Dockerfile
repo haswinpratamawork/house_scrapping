@@ -2,14 +2,14 @@
 #
 # The API imports the `scraper` package, so build from the REPO ROOT (not api/):
 #   docker build -f api/Dockerfile -t collateral_scrapping .
-#   docker run -p 8011:8011 -e GOOGLE_MAPS_API_KEY=AIza... collateral_scrapping
+#   docker run -p 8020:8020 -e GOOGLE_MAPS_API_KEY=AIza... collateral_scrapping
 #
 FROM python:3.13-slim
 
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
     PIP_NO_CACHE_DIR=1 \
-    PORT=8011
+    PORT=8020
 
 WORKDIR /app
 
@@ -26,10 +26,10 @@ COPY api/ ./api/
 RUN useradd --create-home appuser && chown -R appuser /app
 USER appuser
 
-EXPOSE 8011
+EXPOSE 8020
 
 HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
-  CMD python -c "import httpx,sys; sys.exit(0 if httpx.get('http://127.0.0.1:8011/health',timeout=4).status_code==200 else 1)"
+  CMD python -c "import httpx,sys; sys.exit(0 if httpx.get('http://127.0.0.1:8020/health',timeout=4).status_code==200 else 1)"
 
 # exec via sh so ${PORT} expands AND signals (SIGTERM) reach uvicorn for clean shutdown.
 CMD ["sh", "-c", "exec uvicorn api.main:app --host 0.0.0.0 --port ${PORT}"]
