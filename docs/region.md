@@ -64,7 +64,7 @@
 - [x] Cengkareng — 7,101 listings (2026-06-09)
 - [x] Grogol Petamburan — 1,033 listings (2026-06-10)
 - [x] Tamansari — 961 listings (2026-06-11)
-- [ ] Tambora
+- [x] Tambora — 1,025 listings (2026-06-11)
 - [ ] Kebon Jeruk
 - [ ] Kalideres
 - [ ] Palmerah
