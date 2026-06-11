@@ -63,7 +63,7 @@
 ### Jakarta Barat — `jakarta-barat` (8 kecamatan)
 - [x] Cengkareng — 7,101 listings (2026-06-09)
 - [x] Grogol Petamburan — 1,033 listings (2026-06-10)
-- [x] Taman Sari — 961 listings (2026-06-11) — Rumah123 slug: `tamansari` (one word, no hyphen)
+- [x] Tamansari — 961 listings (2026-06-11)
 - [ ] Tambora
 - [ ] Kebon Jeruk
 - [ ] Kalideres
