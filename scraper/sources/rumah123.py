@@ -119,7 +119,7 @@ class Rumah123Source(Source):
         config: Config,
         fetcher: Fetcher,
         *,
-        max_pages: int = 150,
+        max_pages: int = 200,
         district: str | None = None,
     ) -> None:
         self._config = config
