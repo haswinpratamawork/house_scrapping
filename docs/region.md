@@ -66,9 +66,9 @@
 - [x] Tamansari — 961 listings (2026-06-11)
 - [x] Tambora — 1,025 listings (2026-06-11)
 - [x] Kebon Jeruk — 4,878 listings (2026-06-12)
-- [ ] Kalideres
-- [ ] Palmerah
-- [ ] Kembangan
+- [x] Kalideres — 6,420 listings (2026-06-15)
+- [x] Palmerah — 1,006 listings (2026-06-15)
+- [x] Kembangan — 3,335 listings (2026-06-15)
 
 ### Jakarta Selatan — `jakarta-selatan` (10 kecamatan)
 - [ ] Tebet
