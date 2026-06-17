@@ -72,7 +72,7 @@
 
 ### Jakarta Selatan — `jakarta-selatan` (10 kecamatan)
 - [x] Tebet — 4,618 listings (2026-06-17)
-- [ ] Setiabudi
+- [x] Setiabudi — 4,167 listings (2026-06-17)
 - [ ] Mampang Prapatan
 - [ ] Pasar Minggu
 - [ ] Kebayoran Lama
