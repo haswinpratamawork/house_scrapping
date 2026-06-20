@@ -74,7 +74,7 @@
 - [x] Tebet — 4,618 listings (2026-06-17)
 - [x] Setiabudi — 4,167 listings (2026-06-17)
 - [x] Mampang Prapatan — 1,972 listings (2026-06-18)
-- [ ] Pasar Minggu
+- [x] Pasar Minggu — 2,442 active listings (3,325 incl. 883 delisted) (2026-06-20)
 - [ ] Kebayoran Lama
 - [ ] Cilandak
 - [ ] Pesanggrahan
