@@ -75,7 +75,7 @@
 - [x] Setiabudi — 4,167 listings (2026-06-17)
 - [x] Mampang Prapatan — 1,972 listings (2026-06-18)
 - [x] Pasar Minggu — 2,442 listings (2026-06-20)
-- [ ] Kebayoran Lama
+- [x] Kebayoran Lama — 2,886 listings (2026-06-21)
 - [ ] Cilandak
 - [ ] Pesanggrahan
 - [ ] Kebayoran Baru
