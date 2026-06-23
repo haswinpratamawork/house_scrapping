@@ -76,7 +76,7 @@
 - [x] Mampang Prapatan — 1,972 listings (2026-06-18)
 - [x] Pasar Minggu — 2,442 listings (2026-06-20)
 - [x] Kebayoran Lama — 2,886 listings (2026-06-21)
-- [ ] Cilandak
+- [x] Cilandak — 1,428 listings (2026-06-22)
 - [ ] Pesanggrahan
 - [ ] Kebayoran Baru
 - [ ] Pancoran
