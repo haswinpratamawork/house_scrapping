@@ -78,14 +78,14 @@
 - [x] Kebayoran Lama — 2,886 listings (2026-06-21)
 - [x] Cilandak — 1,428 listings (2026-06-22)
 - [x] Pesanggrahan — 3,116 listings (2026-06-23)
-- [ ] Kebayoran Baru
-- [ ] Pancoran
-- [ ] Jagakarsa
+- [x] Kebayoran Baru — 6,046 listings (2026-06-26)
+- [x] Pancoran — 1,943 listings (2026-06-26)
+- [x] Jagakarsa — 2,769 active listings (2026-06-27)
 
 ### Jakarta Timur — `jakarta-timur` (10 kecamatan)
-- [ ] Matraman
-- [ ] Pulogadung
-- [ ] Jatinegara
+- [x] Matraman — 238 active listings (2026-06-29)
+- [x] Pulogadung — 2,047 active listings (2026-06-30)
+- [x] Jatinegara — 1,133 active listings (2026-07-01)
 - [ ] Kramat Jati
 - [ ] Pasar Rebo
 - [ ] Cakung
