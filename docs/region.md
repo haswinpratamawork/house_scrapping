@@ -86,7 +86,7 @@
 - [x] Matraman — 238 active listings (2026-06-29)
 - [x] Pulogadung — 2,047 active listings (2026-06-30)
 - [x] Jatinegara — 1,133 active listings (2026-07-01)
-- [ ] Kramat Jati
+- [x] Kramat Jati — 823 active listings (2026-07-06)
 - [ ] Pasar Rebo
 - [ ] Cakung
 - [ ] Duren Sawit
