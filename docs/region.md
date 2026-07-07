@@ -87,7 +87,7 @@
 - [x] Pulogadung — 2,047 active listings (2026-06-30)
 - [x] Jatinegara — 1,133 active listings (2026-07-01)
 - [x] Kramat Jati — 833 active listings (2026-07-06)
-- [ ] Pasar Rebo
+- [x] Pasar Rebo — 510 active listings (2026-07-06)
 - [ ] Cakung
 - [ ] Duren Sawit
 - [ ] Makasar
