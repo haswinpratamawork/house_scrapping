@@ -12,7 +12,8 @@ from __future__ import annotations
 import json
 import logging
 import re
-from collections.abc import Iterator
+import time
+from collections.abc import Callable, Iterator
 from typing import Any
 
 from scraper.config import Config
@@ -28,6 +29,13 @@ LISTING_URL_RE = re.compile(r"/properti/[a-z0-9\-]+/[a-z0-9\-]+-[a-z]{2,5}\d+/")
 _RSC_CHUNK_RE = re.compile(r'self\.__next_f\.push\(\[1,(".*?")\]\)', re.S)
 _LD_JSON_RE = re.compile(r'<script type="application/ld\+json">(.*?)</script>', re.S)
 _LISTING_KEY_RE = re.compile(r'"listing":\{')
+
+# Index pages are the spine of discovery: losing one abandons the rest of a property
+# type. So we ride out transient network/DNS drops before conceding a page is
+# unreachable — unlike detail pages, which we simply skip on failure. Patience budget
+# = attempts x cooldown seconds (the fetcher already does its own short HTTP retries).
+DEFAULT_INDEX_RETRY_ATTEMPTS = 6
+DEFAULT_INDEX_RETRY_COOLDOWN = 30.0
 
 
 def _slugify(name: str | None) -> str | None:
@@ -121,11 +129,17 @@ class Rumah123Source(Source):
         *,
         max_pages: int = 200,
         district: str | None = None,
+        index_retry_attempts: int = DEFAULT_INDEX_RETRY_ATTEMPTS,
+        index_retry_cooldown: float = DEFAULT_INDEX_RETRY_COOLDOWN,
+        sleep: Callable[[float], None] = time.sleep,
     ) -> None:
         self._config = config
         self._fetcher = fetcher
         self._max_pages = max_pages
         self._district = district
+        self._index_retry_attempts = max(1, index_retry_attempts)
+        self._index_retry_cooldown = index_retry_cooldown
+        self._sleep = sleep
         self.discovery_incomplete = False
 
     # --- discovery --------------------------------------------------------------
@@ -159,21 +173,11 @@ class Rumah123Source(Source):
     ) -> Iterator[str]:
         for page in range(1, self._max_pages + 1):
             url = self._config.index_url(city, property_type, page, district=self._district)
-            try:
-                html = self._fetcher.get(url)
-            except FetchError as exc:
-                # An index fetch failed (e.g. network/rate-limit). The crawl is now
+            html = self._fetch_index_page(url, city, property_type, page)
+            if html is None:
+                # Index fetch failed even after patient retries. The crawl is now
                 # partial — flag it so the orchestrator skips delisting.
                 self.discovery_incomplete = True
-                level = logging.WARNING if page == 1 else logging.INFO
-                logger.log(
-                    level,
-                    "index fetch failed (%s %s p%d) — may be incomplete: %s",
-                    self._district or city,
-                    property_type,
-                    page,
-                    exc,
-                )
                 break
             urls = self.extract_listing_urls(html)
             if not urls:
@@ -193,6 +197,36 @@ class Rumah123Source(Source):
                 self._district or city,
                 property_type,
             )
+
+    def _fetch_index_page(
+        self, url: str, city: str, property_type: str, page: int
+    ) -> str | None:
+        """Fetch one index page, riding out transient failures with a cooldown.
+
+        The fetcher already does short HTTP-level retries; those cover a brief blip.
+        This adds patience for a longer network/DNS outage (which recurred overnight):
+        rather than abandon the whole property type on the first failure, we wait and
+        retry the same page. Returns the HTML, or ``None`` once patience is exhausted.
+        """
+        scope = self._district or city
+        for attempt in range(1, self._index_retry_attempts + 1):
+            try:
+                return self._fetcher.get(url)
+            except FetchError as exc:
+                if attempt == self._index_retry_attempts:
+                    logger.warning(
+                        "index fetch failed (%s %s p%d) after %d attempts — "
+                        "may be incomplete: %s",
+                        scope, property_type, page, self._index_retry_attempts, exc,
+                    )
+                    return None
+                logger.info(
+                    "index fetch failed (%s %s p%d), retry %d/%d in %.0fs: %s",
+                    scope, property_type, page, attempt,
+                    self._index_retry_attempts, self._index_retry_cooldown, exc,
+                )
+                self._sleep(self._index_retry_cooldown)
+        return None  # unreachable; the loop always returns
 
     # --- parsing ----------------------------------------------------------------
 

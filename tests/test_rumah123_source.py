@@ -62,15 +62,62 @@ def test_discover_paginates_until_empty() -> None:
     assert not any("page=3" in u for u in fetcher.requested)
 
 
-def test_discover_stops_on_fetch_error() -> None:
-    class _ErrorFetcher(Fetcher):
-        def get(self, url: str) -> str:
-            raise FetchError("404")
+def test_discover_gives_up_after_retrying_persistent_error() -> None:
+    """A page that never recovers is retried the full budget, then abandoned."""
 
+    class _ErrorFetcher(Fetcher):
+        def __init__(self) -> None:
+            self.calls = 0
+
+        def get(self, url: str) -> str:
+            self.calls += 1
+            raise FetchError("dns down")
+
+    fetcher = _ErrorFetcher()
+    slept: list[float] = []
     source = Rumah123Source(
-        Config(cities=("bekasi",), property_types=("rumah",)), _ErrorFetcher()
+        Config(cities=("bekasi",), property_types=("rumah",)),
+        fetcher,
+        index_retry_attempts=4,
+        index_retry_cooldown=30.0,
+        sleep=slept.append,
     )
     assert list(source.discover()) == []
+    assert fetcher.calls == 4  # retried the full budget on page 1
+    assert slept == [30.0, 30.0, 30.0]  # cooled down between attempts, not after the last
+    assert source.discovery_incomplete is True
+
+
+def test_discover_rides_out_transient_index_failure() -> None:
+    """A transient index-page drop is retried, not fatal — the type is not abandoned."""
+    index_html = _read("rumah123_index_house.html")
+
+    class _FlakyFetcher(Fetcher):
+        def __init__(self) -> None:
+            self.attempts = 0
+
+        def get(self, url: str) -> str:
+            if "page=" not in url:  # page 1 fails twice, then succeeds
+                self.attempts += 1
+                if self.attempts <= 2:
+                    raise FetchError("dns blip")
+                return index_html
+            return "<html>no listings</html>"  # page 2 empty -> natural stop
+
+    fetcher = _FlakyFetcher()
+    slept: list[float] = []
+    source = Rumah123Source(
+        Config(cities=("bekasi",), property_types=("rumah",)),
+        fetcher,
+        index_retry_attempts=6,
+        index_retry_cooldown=15.0,
+        sleep=slept.append,
+    )
+    urls = list(source.discover())
+
+    assert urls  # recovered and yielded page-1 listings
+    assert slept == [15.0, 15.0]  # waited through the two blips
+    assert source.discovery_incomplete is False  # a recovered blip is not "incomplete"
 
 
 # --- parsing ----------------------------------------------------------------------
