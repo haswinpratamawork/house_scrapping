@@ -88,7 +88,7 @@
 - [x] Jatinegara — 1,133 active listings (2026-07-01)
 - [x] Kramat Jati — 833 active listings (2026-07-06)
 - [x] Pasar Rebo — 510 active listings (2026-07-06)
-- [ ] Cakung
+- [x] Cakung — 8,771 active listings (2026-07-08)
 - [ ] Duren Sawit
 - [ ] Makasar
 - [ ] Ciracas
