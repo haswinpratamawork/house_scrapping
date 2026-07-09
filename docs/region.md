@@ -90,7 +90,7 @@
 - [x] Pasar Rebo — 510 active listings (2026-07-06)
 - [x] Cakung — 8,771 active listings (2026-07-08)
 - [x] Duren Sawit — 1,652 active listings (2026-07-09)
-- [ ] Makasar
+- [x] Makasar — 164 active listings (2026-07-09)
 - [ ] Ciracas
 - [ ] Cipayung
 
