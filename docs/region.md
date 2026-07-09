@@ -89,7 +89,7 @@
 - [x] Kramat Jati — 833 active listings (2026-07-06)
 - [x] Pasar Rebo — 510 active listings (2026-07-06)
 - [x] Cakung — 8,771 active listings (2026-07-08)
-- [ ] Duren Sawit
+- [x] Duren Sawit — 1,652 active listings (2026-07-09)
 - [ ] Makasar
 - [ ] Ciracas
 - [ ] Cipayung
