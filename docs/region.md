@@ -92,7 +92,7 @@
 - [x] Duren Sawit — 1,652 active listings (2026-07-09)
 - [x] Makasar — 164 active listings (2026-07-09)
 - [x] Ciracas — 1,190 active listings (2026-07-10)
-- [ ] Cipayung
+- [x] Cipayung — 1,954 active listings (2026-07-11)
 
 ### Kepulauan Seribu — `kepulauan-seribu` (2 kecamatan)
 - [x] Kepulauan Seribu Utara — 20 listings (2026-06-07)
