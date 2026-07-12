@@ -153,7 +153,7 @@
 - [ ] Parung Panjang
 
 ### Kota Depok — `depok` (11 kecamatan)
-- [ ] Sawangan
+- [x] Sawangan — 3,205 active listings (2026-07-12)
 - [ ] Bojongsari
 - [ ] Pancoran Mas
 - [ ] Cipayung
