@@ -154,7 +154,7 @@
 
 ### Kota Depok — `depok` (11 kecamatan)
 - [x] Sawangan — 3,205 active listings (2026-07-12)
-- [ ] Bojongsari
+- [x] Bojongsari — 682 active listings (2026-07-12) · slug `bojong-sari`
 - [ ] Pancoran Mas
 - [ ] Cipayung
 - [ ] Sukmajaya
