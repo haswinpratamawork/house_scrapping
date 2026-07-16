@@ -165,14 +165,20 @@ def test_reconcile_delistings(repo):
 
 def test_reconcile_delistings_scoped_to_districts(repo):
     _, since = repo.start_run()
-    repo.upsert_listing(_make_listing(listing_id="g1", district="Gambir"))
-    repo.upsert_listing(_make_listing(listing_id="s1", district="Sawah Besar"))
+    repo.upsert_listing(
+        _make_listing(listing_id="g1", city="jakarta-pusat", district="Gambir")
+    )
+    repo.upsert_listing(
+        _make_listing(listing_id="s1", city="jakarta-pusat", district="Sawah Besar")
+    )
     # both untouched this run (last_seen before run start)
     with repo.conn.cursor() as cur:
         cur.execute("UPDATE listings SET last_seen_at = %s", (since - timedelta(days=1),))
 
     # reconcile only Gambir -> s1 (Sawah Besar) must stay active
-    delisted = repo.reconcile_delistings("rumah123", since, districts=["Gambir"])
+    delisted = repo.reconcile_delistings(
+        "rumah123", since, scopes=[("jakarta-pusat", "Gambir")]
+    )
     assert delisted == 1
     with repo.conn.cursor() as cur:
         cur.execute("SELECT listing_id, is_active FROM listings ORDER BY listing_id")
@@ -180,5 +186,30 @@ def test_reconcile_delistings_scoped_to_districts(repo):
     assert rows["g1"] is False
     assert rows["s1"] is True
 
-    # empty district scope delists nothing
-    assert repo.reconcile_delistings("rumah123", since, districts=[]) == 0
+    # empty scope delists nothing
+    assert repo.reconcile_delistings("rumah123", since, scopes=[]) == 0
+
+
+def test_reconcile_delistings_does_not_cross_cities_with_same_district(repo):
+    # Regression: two cities share a district name (Cipayung exists in both
+    # Jakarta Timur and Depok). Reconciling one city's Cipayung must not delist
+    # the other city's — scoping on district name alone did exactly that.
+    _, since = repo.start_run()
+    repo.upsert_listing(
+        _make_listing(listing_id="jt", city="jakarta-timur", district="Cipayung")
+    )
+    repo.upsert_listing(
+        _make_listing(listing_id="dp", city="depok", district="Cipayung")
+    )
+    with repo.conn.cursor() as cur:
+        cur.execute("UPDATE listings SET last_seen_at = %s", (since - timedelta(days=1),))
+
+    delisted = repo.reconcile_delistings(
+        "rumah123", since, scopes=[("depok", "Cipayung")]
+    )
+    assert delisted == 1
+    with repo.conn.cursor() as cur:
+        cur.execute("SELECT listing_id, is_active FROM listings ORDER BY listing_id")
+        rows = dict(cur.fetchall())
+    assert rows["dp"] is False  # Depok Cipayung delisted
+    assert rows["jt"] is True  # Jakarta Timur Cipayung untouched

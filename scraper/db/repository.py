@@ -178,17 +178,20 @@ class Repository:
         self,
         source: str,
         since: datetime,
-        districts: list[str] | None = None,
+        scopes: list[tuple[str, str]] | None = None,
     ) -> int:
         """Mark active listings not seen since ``since`` (the run start) as inactive.
 
         Listings touched this run have last_seen_at >= since (set by upsert), so they are
-        left active. ``districts`` scopes the reconcile to only those districts — essential
-        for per-district scrapes, so scraping one district does not delist all the others.
-        With ``districts=None`` the whole source is reconciled. Returns the count delisted.
+        left active. ``scopes`` is a list of ``(city, district)`` pairs that limits the
+        reconcile to only those city+district areas — essential for per-district scrapes so
+        scraping one area does not delist the others. Scoping on district name alone is not
+        enough: two cities can share a district name (e.g. Cipayung exists in both Jakarta
+        Timur and Depok), and a name-only match would delist the other city's listings.
+        With ``scopes=None`` the whole source is reconciled. Returns the count delisted.
         """
         with self.conn.cursor() as cur:
-            if districts is None:
+            if scopes is None:
                 cur.execute(
                     """
                     UPDATE listings SET is_active = false
@@ -196,15 +199,19 @@ class Repository:
                     """,
                     (source, since),
                 )
-            elif not districts:
+            elif not scopes:
                 return 0  # nothing in scope -> delist nothing
             else:
+                cities = [city for city, _ in scopes]
+                districts = [district for _, district in scopes]
                 cur.execute(
                     """
                     UPDATE listings SET is_active = false
                      WHERE source = %s AND is_active = true AND last_seen_at < %s
-                       AND district = ANY(%s)
+                       AND (city, district) IN (
+                           SELECT * FROM unnest(%s::text[], %s::text[])
+                       )
                     """,
-                    (source, since, districts),
+                    (source, since, cities, districts),
                 )
             return cur.rowcount

@@ -65,14 +65,14 @@ class ScrapeRun:
         if not dry_run:
             run_id, started_at = self._repo.start_run(self._source.name)
         stats = RunStats(run_id=run_id)
-        seen_districts: set[str] = set()
+        seen_scopes: set[tuple[str, str]] = set()
 
         try:
             for url in self._source.discover():
                 if limit is not None and stats.found >= limit:
                     break
                 stats.found += 1
-                self._process(url, stats, seen_districts, dry_run=dry_run)
+                self._process(url, stats, seen_scopes, dry_run=dry_run)
 
             if not dry_run:
                 if no_delist:
@@ -87,10 +87,11 @@ class ScrapeRun:
                         "discovery incomplete (index fetch failures) — skipping delisting"
                     )
                 else:
-                    # Only reconcile districts we actually scraped, so a per-district run
-                    # never delists the other districts.
+                    # Only reconcile the (city, district) areas we actually scraped, so a
+                    # per-district run never delists the others — and never a same-named
+                    # district in a different city.
                     stats.delisted = self._repo.reconcile_delistings(
-                        self._source.name, started_at, districts=sorted(seen_districts)
+                        self._source.name, started_at, scopes=sorted(seen_scopes)
                     )
                 self._finish(stats, stats.status)
         except Exception:
@@ -112,7 +113,12 @@ class ScrapeRun:
         return stats
 
     def _process(
-        self, url: str, stats: RunStats, seen_districts: set[str], *, dry_run: bool
+        self,
+        url: str,
+        stats: RunStats,
+        seen_scopes: set[tuple[str, str]],
+        *,
+        dry_run: bool,
     ) -> None:
         try:
             html = self._fetcher.get(url)
@@ -136,8 +142,10 @@ class ScrapeRun:
             stats.new += 1
         else:
             stats.updated += 1
-        if record.district:
-            seen_districts.add(record.district)
+        # Scope delisting by city+district. A record missing either can't be scoped
+        # safely, so leave it out rather than risk delisting across cities.
+        if record.city and record.district:
+            seen_scopes.add((record.city, record.district))
         self._repo.record_price_if_changed(record.listing_id, record.price_idr)
 
     def _finish(self, stats: RunStats, status: str) -> None:
