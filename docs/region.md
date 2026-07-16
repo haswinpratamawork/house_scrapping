@@ -156,7 +156,7 @@
 - [x] Sawangan — 3,205 active listings (2026-07-12)
 - [x] Bojongsari — 682 active listings (2026-07-12) · slug `bojong-sari`
 - [x] Pancoran Mas — 1,657 active listings (2026-07-13)
-- [ ] Cipayung
+- [x] Cipayung — 554 active listings (2026-07-15)
 - [ ] Sukmajaya
 - [ ] Cilodong
 - [ ] Cimanggis
