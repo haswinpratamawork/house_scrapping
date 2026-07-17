@@ -158,7 +158,7 @@
 - [x] Pancoran Mas — 1,657 active listings (2026-07-13)
 - [x] Cipayung — 554 active listings (2026-07-15)
 - [x] Sukmajaya — 1,358 active listings (2026-07-17)
-- [ ] Cilodong
+- [x] Cilodong — 1,419 active listings (2026-07-17)
 - [ ] Cimanggis
 - [ ] Tapos
 - [ ] Beji
