@@ -161,7 +161,7 @@
 - [x] Cilodong — 1,419 active listings (2026-07-17)
 - [x] Cimanggis — 2,434 active listings (2026-07-18)
 - [x] Tapos — 1,036 active listings (2026-07-18)
-- [ ] Beji
+- [x] Beji — 1,338 active listings (2026-07-18)
 - [ ] Limo
 - [ ] Cinere
 
