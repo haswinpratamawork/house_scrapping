@@ -8,13 +8,31 @@ import pytest
 
 from scraper.config import Config
 from scraper.fetch.base import Fetcher, FetchError
-from scraper.sources.rumah123 import LISTING_URL_RE, Rumah123Source
+from scraper.sources.rumah123 import (
+    LISTING_URL_RE,
+    Rumah123Source,
+    _extract_total_count,
+)
 
 FIXTURES = Path(__file__).parent / "fixtures"
 
 
 def _read(name: str) -> str:
     return (FIXTURES / name).read_text()
+
+
+def _listing_urls(n: int, start: int = 0) -> list[str]:
+    """n distinct listing-detail URLs shaped like the real ones (…-hos<digits>/)."""
+    return [
+        f"https://www.rumah123.com/properti/depok-beji/rumah-contoh-hos{10000 + i}/"
+        for i in range(start, start + n)
+    ]
+
+
+def _index_html(urls: list[str], total: int) -> str:
+    """A minimal index page carrying the given listing URLs and advertised totalCount."""
+    links = "".join(f'<a href="{u}">x</a>' for u in urls)
+    return f'<html><body>{links}<span>"totalCount":{total}</span></body></html>'
 
 
 def _source(fetcher: Fetcher | None = None, **cfg) -> Rumah123Source:
@@ -37,8 +55,17 @@ def test_extract_listing_urls_from_index() -> None:
     assert all(LISTING_URL_RE.search(u) for u in urls)
 
 
+def test_extract_total_count() -> None:
+    # escaped (RSC stream) and plain forms both parse
+    assert _extract_total_count(r'\"pageCount\":50,\"totalCount\":996,\"page\"') == 996
+    assert _extract_total_count('"pagination":{"totalCount":42}') == 42
+    # must not pick up the sibling sold/rented counter, and None when absent
+    assert _extract_total_count('"totalCountSoldRented":0') is None
+    assert _extract_total_count("<html>no counts</html>") is None
+
+
 def test_discover_paginates_until_empty() -> None:
-    index_html = _read("rumah123_index_house.html")
+    page1 = _index_html(_listing_urls(20), total=20)  # all 20 fit on page 1
 
     class _PagedFetcher(Fetcher):
         def __init__(self) -> None:
@@ -46,8 +73,8 @@ def test_discover_paginates_until_empty() -> None:
 
         def get(self, url: str) -> str:
             self.requested.append(url)
-            # page 1 returns listings; any later page is empty -> stop
-            return index_html if ("page=" not in url) else "<html>no listings</html>"
+            # page 1 returns all advertised listings; any later page is empty -> stop
+            return page1 if ("page=" not in url) else "<html>no listings</html>"
 
     fetcher = _PagedFetcher()
     source = Rumah123Source(
@@ -55,11 +82,77 @@ def test_discover_paginates_until_empty() -> None:
     )
     urls = list(source.discover())
 
-    assert urls  # got the page-1 listings
+    assert len(urls) == 20  # got the page-1 listings
     assert urls == list(dict.fromkeys(urls))  # globally deduped
-    # fetched page 1 then page 2 (empty) and stopped
+    # fetched page 1 then page 2 (empty, and total already reached) and stopped
     assert any("page=2" in u for u in fetcher.requested)
     assert not any("page=3" in u for u in fetcher.requested)
+    assert source.discovery_incomplete is False
+
+
+def test_discover_retries_transient_empty_page_then_recovers() -> None:
+    """An empty page seen before the advertised total is retried; the recovered listings
+    continue the crawl and the run is not marked incomplete."""
+    page1 = _index_html(_listing_urls(20, start=0), total=40)
+    page2 = _index_html(_listing_urls(20, start=20), total=40)
+
+    class _HiccupFetcher(Fetcher):
+        def __init__(self) -> None:
+            self.page2_hits = 0
+
+        def get(self, url: str) -> str:
+            if "page=2" in url:
+                self.page2_hits += 1
+                # first hit is a transient empty grid; the retry returns the real page
+                return page2 if self.page2_hits >= 2 else "<html>empty</html>"
+            if "page=3" in url:
+                return "<html>empty</html>"
+            return page1
+
+    fetcher = _HiccupFetcher()
+    slept: list[float] = []
+    source = Rumah123Source(
+        Config(cities=("depok",), property_types=("rumah",)),
+        fetcher,
+        index_retry_attempts=4,
+        index_retry_cooldown=10.0,
+        sleep=slept.append,
+        district="beji",
+    )
+    urls = list(source.discover())
+
+    assert len(urls) == 40  # both pages recovered, nothing dropped
+    assert fetcher.page2_hits == 2  # retried page 2 once after the empty hit
+    assert slept == [10.0]  # one cooldown before the successful retry
+    assert source.discovery_incomplete is False
+
+
+def test_discover_flags_incomplete_on_truncation_before_total() -> None:
+    """Regression (Beji, 2026-07-18): a page that stays empty before the advertised total
+    is reached must not be accepted as the end. The crawl is flagged incomplete so the run
+    skips delisting instead of silently dropping the rest of the property type."""
+    page1 = _index_html(_listing_urls(20), total=996)
+
+    class _TruncatingFetcher(Fetcher):
+        def get(self, url: str) -> str:
+            # page 1 has listings; every later page stays empty though 996 were advertised
+            return "<html>empty</html>" if "page=" in url else page1
+
+    fetcher = _TruncatingFetcher()
+    slept: list[float] = []
+    source = Rumah123Source(
+        Config(cities=("depok",), property_types=("rumah",)),
+        fetcher,
+        index_retry_attempts=3,
+        index_retry_cooldown=20.0,
+        sleep=slept.append,
+        district="beji",
+    )
+    urls = list(source.discover())
+
+    assert len(urls) == 20  # only page 1's listings were recoverable
+    assert source.discovery_incomplete is True  # not a silent truncation
+    assert slept == [20.0, 20.0, 20.0]  # exhausted the empty-page retry budget
 
 
 def test_discover_gives_up_after_retrying_persistent_error() -> None:
@@ -90,7 +183,7 @@ def test_discover_gives_up_after_retrying_persistent_error() -> None:
 
 def test_discover_rides_out_transient_index_failure() -> None:
     """A transient index-page drop is retried, not fatal — the type is not abandoned."""
-    index_html = _read("rumah123_index_house.html")
+    page1 = _index_html(_listing_urls(20), total=20)
 
     class _FlakyFetcher(Fetcher):
         def __init__(self) -> None:
@@ -101,8 +194,8 @@ def test_discover_rides_out_transient_index_failure() -> None:
                 self.attempts += 1
                 if self.attempts <= 2:
                     raise FetchError("dns blip")
-                return index_html
-            return "<html>no listings</html>"  # page 2 empty -> natural stop
+                return page1
+            return "<html>no listings</html>"  # page 2 empty, total reached -> stop
 
     fetcher = _FlakyFetcher()
     slept: list[float] = []

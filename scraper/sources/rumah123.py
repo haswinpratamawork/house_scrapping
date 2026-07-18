@@ -29,6 +29,11 @@ LISTING_URL_RE = re.compile(r"/properti/[a-z0-9\-]+/[a-z0-9\-]+-[a-z]{2,5}\d+/")
 _RSC_CHUNK_RE = re.compile(r'self\.__next_f\.push\(\[1,(".*?")\]\)', re.S)
 _LD_JSON_RE = re.compile(r'<script type="application/ld\+json">(.*?)</script>', re.S)
 _LISTING_KEY_RE = re.compile(r'"listing":\{')
+# The search's advertised result count, from the index page's pagination block
+# (``"pagination":{...,"totalCount":N,...}``). Quotes are backslash-escaped in the RSC
+# stream, so the backslash is optional. Anchored on ``":`` so it never matches the
+# sibling ``totalCountSoldRented`` key.
+_TOTAL_COUNT_RE = re.compile(r'totalCount\\?":\s*(\d+)')
 
 # Index pages are the spine of discovery: losing one abandons the rest of a property
 # type. So we ride out transient network/DNS drops before conceding a page is
@@ -95,6 +100,16 @@ def _find_product_ld(html: str) -> dict[str, Any] | None:
             if "Product" in types:
                 return doc
     return None
+
+
+def _extract_total_count(html: str) -> int | None:
+    """The number of listings the search advertises, or None if not present.
+
+    Read from the index page so discovery can tell a genuine end of results from a
+    transient empty page mid-pagination.
+    """
+    match = _TOTAL_COUNT_RE.search(html)
+    return int(match.group(1)) if match else None
 
 
 def _find_listing_object(stream: str, prefer_id: str | None) -> dict[str, Any] | None:
@@ -171,6 +186,8 @@ class Rumah123Source(Source):
     def _discover_combo(
         self, city: str, property_type: str, seen: set[str]
     ) -> Iterator[str]:
+        expected_total: int | None = None
+        collected = 0
         for page in range(1, self._max_pages + 1):
             url = self._config.index_url(city, property_type, page, district=self._district)
             html = self._fetch_index_page(url, city, property_type, page)
@@ -179,15 +196,34 @@ class Rumah123Source(Source):
                 # partial — flag it so the orchestrator skips delisting.
                 self.discovery_incomplete = True
                 break
-            urls = self.extract_listing_urls(html)
-            if not urls:
-                break  # no listings -> end of pages
-            new = [u for u in urls if u not in seen]
+            if expected_total is None:
+                expected_total = _extract_total_count(html)
+            new = [u for u in self.extract_listing_urls(html) if u not in seen]
             if not new:
-                break  # same page repeating -> stop
+                # This page added nothing. Accept it as the end of results only if we
+                # have already discovered everything the search advertised. Otherwise an
+                # empty or all-duplicate page mid-pagination is a transient hiccup (soft
+                # rate-limit or glitch) that would silently truncate the whole property
+                # type — as on Beji, where page 9 came back empty and dropped ~840 of 996
+                # houses while the run still reported "completed". Retry before conceding.
+                if expected_total is None or collected >= expected_total:
+                    break  # genuine end of results
+                new = self._retry_empty_index_page(url, city, property_type, page, seen)
+                if not new:
+                    # Still empty after retries: the real end cannot be confirmed, so mark
+                    # the crawl partial (which skips delisting) rather than truncate blind.
+                    self.discovery_incomplete = True
+                    logger.warning(
+                        "index truncated for %s %s at page %d: found %d of %d advertised "
+                        "listings after retries — flagging incomplete, delisting skipped",
+                        self._district or city, property_type, page, collected,
+                        expected_total,
+                    )
+                    break
             for u in new:
                 seen.add(u)
                 yield u
+            collected += len(new)
         else:
             # Loop ran every page without an early stop -> the cap was reached and there
             # may be more listings. Never truncate silently.
@@ -197,6 +233,29 @@ class Rumah123Source(Source):
                 self._district or city,
                 property_type,
             )
+
+    def _retry_empty_index_page(
+        self, url: str, city: str, property_type: str, page: int, seen: set[str]
+    ) -> list[str]:
+        """Re-fetch an index page that came back empty before the advertised total was
+        reached. A transient empty/duplicate grid recovers on retry. Returns the newly
+        found URLs, or ``[]`` if still empty after the full patience budget.
+        """
+        scope = self._district or city
+        for attempt in range(1, self._index_retry_attempts + 1):
+            logger.info(
+                "index page (%s %s p%d) empty before total reached, retry %d/%d in %.0fs",
+                scope, property_type, page, attempt, self._index_retry_attempts,
+                self._index_retry_cooldown,
+            )
+            self._sleep(self._index_retry_cooldown)
+            html = self._fetch_index_page(url, city, property_type, page)
+            if html is None:
+                return []  # network failure; caller flags the crawl incomplete
+            new = [u for u in self.extract_listing_urls(html) if u not in seen]
+            if new:
+                return new
+        return []
 
     def _fetch_index_page(
         self, url: str, city: str, property_type: str, page: int
