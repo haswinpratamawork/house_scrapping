@@ -160,7 +160,7 @@
 - [x] Sukmajaya — 1,358 active listings (2026-07-17)
 - [x] Cilodong — 1,419 active listings (2026-07-17)
 - [x] Cimanggis — 2,434 active listings (2026-07-18)
-- [ ] Tapos
+- [x] Tapos — 1,036 active listings (2026-07-18)
 - [ ] Beji
 - [ ] Limo
 - [ ] Cinere
