@@ -162,7 +162,7 @@
 - [x] Cimanggis — 2,434 active listings (2026-07-18)
 - [x] Tapos — 1,036 active listings (2026-07-18)
 - [x] Beji — 1,338 active listings (2026-07-18)
-- [x] Limo — 1,237 active listings (2026-07-22) · site-capped rumah index (1,023/1,054), 23 stale rows reconciled
+- [x] Limo — 1,237 active listings (2026-07-22)
 - [ ] Cinere
 
 ### Kota Bekasi — `bekasi` (12 kecamatan)
