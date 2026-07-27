@@ -167,11 +167,14 @@ def build_scrape_run(
     repository: Repository | None,
     *,
     max_pages: int = 200,
+    start_page: int = 1,
     district: str | None = None,
 ) -> ScrapeRun:
     """Construct a production ScrapeRun (httpx fetcher + Rumah123 source)."""
     fetcher = HttpxFetcher(config)
-    source = Rumah123Source(config, fetcher, max_pages=max_pages, district=district)
+    source = Rumah123Source(
+        config, fetcher, max_pages=max_pages, start_page=start_page, district=district
+    )
     return ScrapeRun(repository, fetcher, source)
 
 
@@ -195,6 +198,13 @@ def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     )
     parser.add_argument(
         "--max-pages", type=int, default=200, help="max index pages per city x type"
+    )
+    parser.add_argument(
+        "--start-page",
+        type=int,
+        default=1,
+        help="first index page to fetch (>1 resumes a later slice; pair with "
+        "--no-delist to fill pages a throttled run never reached)",
     )
     parser.add_argument(
         "--limit", type=int, help="stop after processing this many listings"
@@ -244,7 +254,11 @@ def main(argv: list[str] | None = None) -> int:
 
     try:
         run = build_scrape_run(
-            config, repository, max_pages=args.max_pages, district=args.district
+            config,
+            repository,
+            max_pages=args.max_pages,
+            start_page=args.start_page,
+            district=args.district,
         )
         stats = run.execute(
             limit=args.limit, dry_run=args.dry_run, no_delist=args.no_delist

@@ -143,6 +143,7 @@ class Rumah123Source(Source):
         fetcher: Fetcher,
         *,
         max_pages: int = 200,
+        start_page: int = 1,
         district: str | None = None,
         index_retry_attempts: int = DEFAULT_INDEX_RETRY_ATTEMPTS,
         index_retry_cooldown: float = DEFAULT_INDEX_RETRY_COOLDOWN,
@@ -151,6 +152,7 @@ class Rumah123Source(Source):
         self._config = config
         self._fetcher = fetcher
         self._max_pages = max_pages
+        self._start_page = max(1, start_page)
         self._district = district
         self._index_retry_attempts = max(1, index_retry_attempts)
         self._index_retry_cooldown = index_retry_cooldown
@@ -188,7 +190,11 @@ class Rumah123Source(Source):
     ) -> Iterator[str]:
         expected_total: int | None = None
         collected = 0
-        for page in range(1, self._max_pages + 1):
+        # Resume support: start_page > 1 crawls only a later slice (e.g. to fill pages a
+        # throttled earlier run never reached). ``collected`` then counts just this slice,
+        # so it will never reach the page-1 ``expected_total`` — the crawl is inherently
+        # partial and delisting stays skipped, which is what a resume/top-up wants.
+        for page in range(self._start_page, self._max_pages + 1):
             url = self._config.index_url(city, property_type, page, district=self._district)
             html = self._fetch_index_page(url, city, property_type, page)
             if html is None:
