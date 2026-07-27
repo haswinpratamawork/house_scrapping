@@ -163,7 +163,7 @@
 - [x] Tapos — 1,036 active listings (2026-07-18)
 - [x] Beji — 1,338 active listings (2026-07-18)
 - [x] Limo — 1,237 active listings (2026-07-22)
-- [ ] Cinere
+- [x] Cinere — 5,907 active listings (2026-07-27)
 
 ### Kota Bekasi — `bekasi` (12 kecamatan)
 - [ ] Pondok Gede
