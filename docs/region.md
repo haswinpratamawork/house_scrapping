@@ -103,7 +103,7 @@
 ## Jawa Barat (West Java) — Jabodetabek portion
 
 ### Kota Bogor — `bogor` (6 kecamatan)
-- [ ] Bogor Selatan
+- [x] Bogor Selatan — 797 active listings (2026-07-28)
 - [ ] Bogor Timur
 - [ ] Bogor Utara
 - [ ] Bogor Tengah
