@@ -106,7 +106,7 @@
 - [x] Bogor Selatan — 797 active listings (2026-07-28)
 - [x] Bogor Timur — 668 active listings (2026-07-29)
 - [x] Bogor Utara — 647 active listings (2026-07-29)
-- [ ] Bogor Tengah
+- [x] Bogor Tengah — 549 active listings (2026-07-31)
 - [ ] Bogor Barat
 - [ ] Tanah Sareal
 
