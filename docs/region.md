@@ -107,7 +107,7 @@
 - [x] Bogor Timur — 668 active listings (2026-07-29)
 - [x] Bogor Utara — 647 active listings (2026-07-29)
 - [x] Bogor Tengah — 549 active listings (2026-07-31)
-- [ ] Bogor Barat
+- [x] Bogor Barat — 1,942 active listings (2026-08-01)
 - [ ] Tanah Sareal
 
 ### Kabupaten Bogor — `kabupaten-bogor` (40 kecamatan)
