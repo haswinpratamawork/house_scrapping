@@ -108,7 +108,7 @@
 - [x] Bogor Utara — 647 active listings (2026-07-29)
 - [x] Bogor Tengah — 549 active listings (2026-07-31)
 - [x] Bogor Barat — 1,942 active listings (2026-08-01)
-- [ ] Tanah Sareal
+- [x] Tanah Sareal — 1,562 active listings (2026-08-02) — houses capped by index end at p61 (1,123 of 1,209 advertised)
 
 ### Kabupaten Bogor — `kabupaten-bogor` (40 kecamatan)
 - [ ] Nanggung
