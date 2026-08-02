@@ -9,7 +9,7 @@
 
 ## How to read this
 
-- `- [ ]` district not yet scraped · `- [x]` district scraped (with listing count + date)
+- `- [ ]` district not yet scraped · `- [x]` district scraped (with active listing count + date)
 - Scraped per district via `…/jual/{city}/{district}/{type}/` across all property types
   (rumah, apartemen, tanah, ruko, gudang).
 - District **slug** = name lowercased with spaces → hyphens (e.g. "Sawah Besar" → `sawah-besar`).
@@ -43,43 +43,43 @@
 ## DKI Jakarta (province)
 
 ### Jakarta Pusat — `jakarta-pusat` (8 kecamatan)
-- [x] Gambir — 672 listings (2026-06-04)
-- [x] Sawah Besar — 528 listings (2026-06-04)
-- [x] Kemayoran — 2,879 listings / 2,519 active (2026-06-05)
-- [x] Senen — 1,183 listings (2026-06-05)
-- [x] Cempaka Putih — 1,723 listings (2026-06-06)
-- [x] Menteng — 1,937 listings (2026-06-06)
-- [x] Tanah Abang — 1,618 listings (2026-06-07)
-- [x] Johar Baru — 357 listings (2026-06-05)
+- [x] Gambir — 672 active listings (2026-06-04)
+- [x] Sawah Besar — 528 active listings (2026-06-04)
+- [x] Kemayoran — 2,519 active listings (2026-06-05)
+- [x] Senen — 1,183 active listings (2026-06-05)
+- [x] Cempaka Putih — 1,723 active listings (2026-06-06)
+- [x] Menteng — 1,937 active listings (2026-06-06)
+- [x] Tanah Abang — 1,618 active listings (2026-06-07)
+- [x] Johar Baru — 357 active listings (2026-06-05)
 
 ### Jakarta Utara — `jakarta-utara` (6 kecamatan)
-- [x] Penjaringan — 1,866 listings (2026-06-07)
-- [x] Pademangan — 1,755 listings (2026-06-08)
-- [x] Tanjung Priok — 1,173 listings (2026-06-08)
-- [x] Koja — 402 listings (2026-06-08)
-- [x] Kelapa Gading — 3,015 listings (2026-06-08)
-- [x] Cilincing — 1,161 listings (2026-06-08)
+- [x] Penjaringan — 1,866 active listings (2026-06-07)
+- [x] Pademangan — 1,755 active listings (2026-06-08)
+- [x] Tanjung Priok — 1,173 active listings (2026-06-08)
+- [x] Koja — 402 active listings (2026-06-08)
+- [x] Kelapa Gading — 3,015 active listings (2026-06-08)
+- [x] Cilincing — 1,161 active listings (2026-06-08)
 
 ### Jakarta Barat — `jakarta-barat` (8 kecamatan)
-- [x] Cengkareng — 7,101 listings (2026-06-09)
-- [x] Grogol Petamburan — 1,033 listings (2026-06-10)
-- [x] Tamansari — 961 listings (2026-06-11)
-- [x] Tambora — 1,025 listings (2026-06-11)
-- [x] Kebon Jeruk — 4,878 listings (2026-06-12)
-- [x] Kalideres — 6,420 listings (2026-06-15)
-- [x] Palmerah — 1,006 listings (2026-06-15)
-- [x] Kembangan — 3,335 listings (2026-06-15)
+- [x] Cengkareng — 7,101 active listings (2026-06-09)
+- [x] Grogol Petamburan — 1,033 active listings (2026-06-10)
+- [x] Tamansari — 956 active listings (2026-06-11)
+- [x] Tambora — 1,025 active listings (2026-06-11)
+- [x] Kebon Jeruk — 4,878 active listings (2026-06-12)
+- [x] Kalideres — 6,312 active listings (2026-06-15)
+- [x] Palmerah — 1,006 active listings (2026-06-15)
+- [x] Kembangan — 3,335 active listings (2026-06-15)
 
 ### Jakarta Selatan — `jakarta-selatan` (10 kecamatan)
-- [x] Tebet — 4,618 listings (2026-06-17)
-- [x] Setiabudi — 4,167 listings (2026-06-17)
-- [x] Mampang Prapatan — 1,972 listings (2026-06-18)
-- [x] Pasar Minggu — 2,442 listings (2026-06-20)
-- [x] Kebayoran Lama — 2,886 listings (2026-06-21)
-- [x] Cilandak — 1,428 listings (2026-06-22)
-- [x] Pesanggrahan — 3,116 listings (2026-06-23)
-- [x] Kebayoran Baru — 6,046 listings (2026-06-26)
-- [x] Pancoran — 1,943 listings (2026-06-26)
+- [x] Tebet — 4,591 active listings (2026-06-17)
+- [x] Setiabudi — 4,167 active listings (2026-06-17)
+- [x] Mampang Prapatan — 1,972 active listings (2026-06-18)
+- [x] Pasar Minggu — 2,442 active listings (2026-06-20)
+- [x] Kebayoran Lama — 2,886 active listings (2026-06-21)
+- [x] Cilandak — 1,428 active listings (2026-06-22)
+- [x] Pesanggrahan — 3,116 active listings (2026-06-23)
+- [x] Kebayoran Baru — 6,046 active listings (2026-06-26)
+- [x] Pancoran — 1,943 active listings (2026-06-26)
 - [x] Jagakarsa — 2,769 active listings (2026-06-27)
 
 ### Jakarta Timur — `jakarta-timur` (10 kecamatan)
@@ -95,8 +95,8 @@
 - [x] Cipayung — 1,954 active listings (2026-07-11)
 
 ### Kepulauan Seribu — `kepulauan-seribu` (2 kecamatan)
-- [x] Kepulauan Seribu Utara — 20 listings (2026-06-07)
-- [x] Kepulauan Seribu Selatan — 5 listings (2026-06-07)
+- [x] Kepulauan Seribu Utara — 20 active listings (2026-06-07)
+- [x] Kepulauan Seribu Selatan — 5 active listings (2026-06-07)
 
 ---
 
@@ -108,7 +108,7 @@
 - [x] Bogor Utara — 647 active listings (2026-07-29)
 - [x] Bogor Tengah — 549 active listings (2026-07-31)
 - [x] Bogor Barat — 1,942 active listings (2026-08-01)
-- [x] Tanah Sareal — 1,562 active listings (2026-08-02) — houses capped by index end at p61 (1,123 of 1,209 advertised)
+- [x] Tanah Sareal — 1,562 active listings (2026-08-02)
 
 ### Kabupaten Bogor — `kabupaten-bogor` (40 kecamatan)
 - [ ] Nanggung
