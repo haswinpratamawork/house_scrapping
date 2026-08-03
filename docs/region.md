@@ -25,7 +25,7 @@
 | DKI Jakarta | Jakarta Timur | Kota | 10 | `jakarta-timur` |
 | DKI Jakarta | Kepulauan Seribu | Kab. | 2 | `kepulauan-seribu` |
 | Jawa Barat | Kota Bogor | Kota | 6 | `bogor` |
-| Jawa Barat | Kabupaten Bogor | Kab. | 40 | `kabupaten-bogor` |
+| Jawa Barat | Kabupaten Bogor | Kab. | 40 | `bogor` (shared with Kota Bogor) |
 | Jawa Barat | Kota Depok | Kota | 11 | `depok` |
 | Jawa Barat | Kota Bekasi | Kota | 12 | `bekasi` |
 | Jawa Barat | Kabupaten Bekasi | Kab. | 23 | `kabupaten-bekasi` |
@@ -35,8 +35,10 @@
 
 **Total: 3 provinces · 14 cities/regencies · 185 kecamatan**
 
-> **Slug note:** the three **kabupaten** (Bogor/Bekasi/Tangerang) and `kepulauan-seribu` slugs
-> are not yet confirmed against the live site — verify before scraping those.
+> **Slug note:** `kabupaten-bogor` does **not** exist on Rumah123 (404) — Kabupaten Bogor
+> districts live under the same `bogor` city slug as Kota Bogor. The `kabupaten-bekasi` and
+> `kabupaten-tangerang` slugs are still unconfirmed; verify before scraping those. Confirm a
+> slug by `totalCount` > 0, not HTTP 200 — a wrong slug can soft-404 with a live 200 page.
 
 ---
 
@@ -110,8 +112,8 @@
 - [x] Bogor Barat — 1,942 active listings (2026-08-01)
 - [x] Tanah Sareal — 1,562 active listings (2026-08-02)
 
-### Kabupaten Bogor — `kabupaten-bogor` (40 kecamatan)
-- [ ] Nanggung
+### Kabupaten Bogor — `bogor` (40 kecamatan)
+- [x] Nanggung — 9 active listings (2026-08-03)
 - [ ] Leuwiliang
 - [ ] Leuwisadeng
 - [ ] Pamijahan
