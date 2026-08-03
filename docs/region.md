@@ -115,7 +115,7 @@
 ### Kabupaten Bogor — `bogor` (40 kecamatan)
 - [x] Nanggung — 9 active listings (2026-08-03)
 - [x] Leuwiliang — 108 active listings (2026-08-03)
-- [ ] Leuwisadeng
+- [x] Leuwisadeng — 34 active listings (2026-08-03)
 - [ ] Pamijahan
 - [ ] Cibungbulang
 - [ ] Ciampea
