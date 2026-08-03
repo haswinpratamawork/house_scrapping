@@ -118,7 +118,7 @@
 - [x] Leuwisadeng — 34 active listings (2026-08-03)
 - [x] Pamijahan — 160 active listings (2026-08-03)
 - [x] Cibungbulang — 76 active listings (2026-08-03)
-- [ ] Ciampea
+- [x] Ciampea — 245 active listings (2026-08-03)
 - [ ] Tenjolaya
 - [ ] Dramaga
 - [ ] Ciomas
