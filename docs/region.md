@@ -119,7 +119,7 @@
 - [x] Pamijahan — 160 active listings (2026-08-03)
 - [x] Cibungbulang — 76 active listings (2026-08-03)
 - [x] Ciampea — 245 active listings (2026-08-03)
-- [ ] Tenjolaya
+- [x] Tenjolaya — 47 active listings (2026-08-05)
 - [ ] Dramaga
 - [ ] Ciomas
 - [ ] Tamansari
