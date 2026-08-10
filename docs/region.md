@@ -123,7 +123,7 @@
 - [x] Dramaga — 362 active listings (2026-08-10)
 - [x] Ciomas — 536 active listings (2026-08-10)
 - [x] Tamansari — 193 active listings (2026-08-10)
-- [ ] Cijeruk
+- [x] Cijeruk — 289 active listings (2026-08-10)
 - [ ] Cigombong
 - [ ] Caringin
 - [ ] Ciawi
