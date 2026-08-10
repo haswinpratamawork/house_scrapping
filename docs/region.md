@@ -122,7 +122,7 @@
 - [x] Tenjolaya — 47 active listings (2026-08-05)
 - [x] Dramaga — 362 active listings (2026-08-10)
 - [x] Ciomas — 536 active listings (2026-08-10)
-- [ ] Tamansari
+- [x] Tamansari — 193 active listings (2026-08-10)
 - [ ] Cijeruk
 - [ ] Cigombong
 - [ ] Caringin
