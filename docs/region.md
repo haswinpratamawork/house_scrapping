@@ -121,7 +121,7 @@
 - [x] Ciampea — 245 active listings (2026-08-03)
 - [x] Tenjolaya — 47 active listings (2026-08-05)
 - [x] Dramaga — 362 active listings (2026-08-10)
-- [ ] Ciomas
+- [x] Ciomas — 536 active listings (2026-08-10)
 - [ ] Tamansari
 - [ ] Cijeruk
 - [ ] Cigombong
