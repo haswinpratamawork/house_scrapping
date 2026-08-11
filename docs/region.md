@@ -126,7 +126,7 @@
 - [x] Cijeruk — 289 active listings (2026-08-10)
 - [x] Cigombong — 179 active listings (2026-08-11)
 - [x] Caringin — 215 active listings (2026-08-11)
-- [ ] Ciawi
+- [x] Ciawi — 280 active listings (2026-08-11)
 - [ ] Cisarua
 - [ ] Megamendung
 - [ ] Sukaraja
