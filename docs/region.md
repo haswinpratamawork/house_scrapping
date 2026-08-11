@@ -124,7 +124,7 @@
 - [x] Ciomas — 536 active listings (2026-08-10)
 - [x] Tamansari — 193 active listings (2026-08-10)
 - [x] Cijeruk — 289 active listings (2026-08-10)
-- [ ] Cigombong
+- [x] Cigombong — 179 active listings (2026-08-11)
 - [ ] Caringin
 - [ ] Ciawi
 - [ ] Cisarua
