@@ -127,7 +127,7 @@
 - [x] Cigombong — 179 active listings (2026-08-11)
 - [x] Caringin — 215 active listings (2026-08-11)
 - [x] Ciawi — 280 active listings (2026-08-11)
-- [ ] Cisarua
+- [x] Cisarua — 392 active listings (2026-08-12)
 - [ ] Megamendung
 - [ ] Sukaraja
 - [ ] Babakan Madang
