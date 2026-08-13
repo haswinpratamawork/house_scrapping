@@ -129,7 +129,7 @@
 - [x] Ciawi — 280 active listings (2026-08-11)
 - [x] Cisarua — 392 active listings (2026-08-12)
 - [x] Megamendung — 352 active listings (2026-08-13)
-- [ ] Sukaraja
+- [x] Sukaraja — 570 active listings (2026-08-13)
 - [ ] Babakan Madang
 - [ ] Sukamakmur
 - [ ] Cariu
