@@ -132,7 +132,7 @@
 - [x] Sukaraja — 570 active listings (2026-08-13)
 - [x] Babakan Madang — 422 active listings (2026-08-13)
 - [x] Sukamakmur — 143 active listings (2026-08-13)
-- [ ] Cariu
+- [x] Cariu — 101 active listings (2026-08-13, reconciled)
 - [ ] Tanjungsari
 - [ ] Jonggol
 - [ ] Cileungsi
