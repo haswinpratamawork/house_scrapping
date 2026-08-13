@@ -131,7 +131,7 @@
 - [x] Megamendung — 352 active listings (2026-08-13)
 - [x] Sukaraja — 570 active listings (2026-08-13)
 - [x] Babakan Madang — 422 active listings (2026-08-13)
-- [ ] Sukamakmur
+- [x] Sukamakmur — 143 active listings (2026-08-13)
 - [ ] Cariu
 - [ ] Tanjungsari
 - [ ] Jonggol
