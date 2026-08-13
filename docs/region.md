@@ -130,7 +130,7 @@
 - [x] Cisarua — 392 active listings (2026-08-12)
 - [x] Megamendung — 352 active listings (2026-08-13)
 - [x] Sukaraja — 570 active listings (2026-08-13)
-- [ ] Babakan Madang
+- [x] Babakan Madang — 422 active listings (2026-08-13)
 - [ ] Sukamakmur
 - [ ] Cariu
 - [ ] Tanjungsari
