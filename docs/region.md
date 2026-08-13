@@ -128,7 +128,7 @@
 - [x] Caringin — 215 active listings (2026-08-11)
 - [x] Ciawi — 280 active listings (2026-08-11)
 - [x] Cisarua — 392 active listings (2026-08-12)
-- [ ] Megamendung
+- [x] Megamendung — 352 active listings (2026-08-13)
 - [ ] Sukaraja
 - [ ] Babakan Madang
 - [ ] Sukamakmur
