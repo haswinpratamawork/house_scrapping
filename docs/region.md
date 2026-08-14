@@ -134,7 +134,7 @@
 - [x] Sukamakmur — 143 active listings (2026-08-13)
 - [x] Cariu — 101 active listings (2026-08-13, reconciled)
 - [x] Tanjungsari — 91 active listings (2026-08-14)
-- [ ] Jonggol
+- [x] Jonggol — 735 active listings (2026-08-14)
 - [ ] Cileungsi
 - [ ] Klapanunggal
 - [ ] Gunung Putri
