@@ -133,7 +133,7 @@
 - [x] Babakan Madang — 422 active listings (2026-08-13)
 - [x] Sukamakmur — 143 active listings (2026-08-13)
 - [x] Cariu — 101 active listings (2026-08-13, reconciled)
-- [ ] Tanjungsari
+- [x] Tanjungsari — 91 active listings (2026-08-14)
 - [ ] Jonggol
 - [ ] Cileungsi
 - [ ] Klapanunggal
