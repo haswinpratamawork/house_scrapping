@@ -135,7 +135,7 @@
 - [x] Cariu — 101 active listings (2026-08-13, reconciled)
 - [x] Tanjungsari — 91 active listings (2026-08-14)
 - [x] Jonggol — 735 active listings (2026-08-14)
-- [ ] Cileungsi
+- [x] Cileungsi — 3,243 active listings (2026-08-17)
 - [ ] Klapanunggal
 - [ ] Gunung Putri
 - [ ] Citeureup
