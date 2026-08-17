@@ -137,7 +137,7 @@
 - [x] Jonggol — 735 active listings (2026-08-14)
 - [x] Cileungsi — 3,243 active listings (2026-08-17)
 - [x] Klapanunggal — 200 active listings (2026-08-17)
-- [ ] Gunung Putri
+- [x] Gunung Putri — 2,172 active listings (2026-08-17)
 - [ ] Citeureup
 - [ ] Cibinong
 - [ ] Bojonggede
