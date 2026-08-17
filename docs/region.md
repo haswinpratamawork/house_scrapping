@@ -136,7 +136,7 @@
 - [x] Tanjungsari — 91 active listings (2026-08-14)
 - [x] Jonggol — 735 active listings (2026-08-14)
 - [x] Cileungsi — 3,243 active listings (2026-08-17)
-- [ ] Klapanunggal
+- [x] Klapanunggal — 200 active listings (2026-08-17)
 - [ ] Gunung Putri
 - [ ] Citeureup
 - [ ] Cibinong
