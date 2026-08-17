@@ -138,7 +138,7 @@
 - [x] Cileungsi — 3,243 active listings (2026-08-17)
 - [x] Klapanunggal — 200 active listings (2026-08-17)
 - [x] Gunung Putri — 2,172 active listings (2026-08-17)
-- [ ] Citeureup
+- [x] Citeureup — 506 active listings (2026-08-17)
 - [ ] Cibinong
 - [ ] Bojonggede
 - [ ] Tajurhalang
