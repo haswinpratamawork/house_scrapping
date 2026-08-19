@@ -139,18 +139,18 @@
 - [x] Klapanunggal — 200 active listings (2026-08-17)
 - [x] Gunung Putri — 2,172 active listings (2026-08-17)
 - [x] Citeureup — 506 active listings (2026-08-17)
-- [ ] Cibinong
+- [x] Cibinong — 2,617 active listings (2026-08-19)
 - [ ] Bojonggede
 - [ ] Tajurhalang
 - [ ] Kemang
-- [ ] Rancabungur
+- [x] Rancabungur — 137 active listings (2026-08-19)
 - [ ] Parung
 - [ ] Ciseeng
 - [ ] Gunungsindur
 - [ ] Rumpin
-- [ ] Cigudeg
-- [ ] Sukajaya
-- [ ] Jasinga
+- [x] Cigudeg — 46 active listings (2026-08-19)
+- [x] Sukajaya — 15 active listings (2026-08-19)
+- [x] Jasinga — 126 active listings (2026-08-19)
 - [ ] Tenjo
 - [ ] Parung Panjang
 
