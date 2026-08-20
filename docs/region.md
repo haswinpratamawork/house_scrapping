@@ -140,19 +140,19 @@
 - [x] Gunung Putri — 2,172 active listings (2026-08-17)
 - [x] Citeureup — 506 active listings (2026-08-17)
 - [x] Cibinong — 2,617 active listings (2026-08-19)
-- [ ] Bojonggede
-- [ ] Tajurhalang
-- [ ] Kemang
+- [x] Bojonggede — 1,137 active listings (2026-08-20) · slug `bojong-gede`
+- [x] Tajurhalang — 492 active listings (2026-08-20) · slug `tajur-halang` · tanah index caps at ~p4
+- [x] Kemang — 389 active listings (2026-08-20)
 - [x] Rancabungur — 137 active listings (2026-08-19)
-- [ ] Parung
-- [ ] Ciseeng
-- [ ] Gunungsindur
-- [ ] Rumpin
+- [x] Parung — 771 active listings (2026-08-20)
+- [x] Ciseeng — 285 active listings (2026-08-20)
+- [x] Gunungsindur — 1,599 active listings (2026-08-20) · slug `gunung-sindur`
+- [x] Rumpin — 268 active listings (2026-08-20)
 - [x] Cigudeg — 46 active listings (2026-08-19)
 - [x] Sukajaya — 15 active listings (2026-08-19)
 - [x] Jasinga — 126 active listings (2026-08-19)
-- [ ] Tenjo
-- [ ] Parung Panjang
+- [x] Tenjo — 445 active listings (2026-08-20)
+- [x] Parung Panjang — 995 active listings (2026-08-20)
 
 ### Kota Depok — `depok` (11 kecamatan)
 - [x] Sawangan — 3,205 active listings (2026-07-12)
