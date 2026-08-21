@@ -178,7 +178,7 @@
 - [ ] Rawalumbu — slug `rawalumbu` (`rawa-lumbu` 404s)
 - [ ] Bekasi Selatan
 - [ ] Bekasi Barat
-- [ ] Medan Satria — slug `medan-satria` (`medansatria` 404s)
+- [x] Medan Satria — 857 active listings (2026-08-21) · slug `medan-satria` (`medansatria` 404s)
 - [ ] Bekasi Utara
 
 ### Kabupaten Bekasi — `kabupaten-bekasi` (23 kecamatan)
