@@ -175,7 +175,7 @@
 - [x] Bantar Gebang — 415 active listings (2026-08-21)
 - [ ] Mustika Jaya — slug `mustikajaya` (`mustika-jaya` 404s)
 - [ ] Bekasi Timur
-- [ ] Rawalumbu — slug `rawalumbu` (`rawa-lumbu` 404s)
+- [x] Rawalumbu — 863 active listings (2026-08-21) · slug `rawalumbu` (`rawa-lumbu` 404s)
 - [ ] Bekasi Selatan
 - [ ] Bekasi Barat
 - [x] Medan Satria — 857 active listings (2026-08-21) · slug `medan-satria` (`medansatria` 404s)
