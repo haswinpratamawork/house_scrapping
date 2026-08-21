@@ -168,17 +168,17 @@
 - [x] Cinere — 6,463 active listings (2026-07-27)
 
 ### Kota Bekasi — `bekasi` (12 kecamatan)
-- [ ] Pondok Gede
-- [ ] Jati Sampurna
-- [ ] Pondok Melati
+- [x] Pondok Gede — 1,342 active listings (2026-08-20)
+- [x] Jati Sampurna — 1,574 active listings (2026-08-20) · slug `jatisampurna`
+- [x] Pondok Melati — 241 active listings (2026-08-20) · slug `pondokmelati`
 - [ ] Jati Asih
-- [ ] Bantar Gebang
-- [ ] Mustika Jaya
+- [x] Bantar Gebang — 415 active listings (2026-08-21)
+- [ ] Mustika Jaya — slug `mustikajaya` (`mustika-jaya` 404s)
 - [ ] Bekasi Timur
-- [ ] Rawalumbu
+- [ ] Rawalumbu — slug `rawalumbu` (`rawa-lumbu` 404s)
 - [ ] Bekasi Selatan
 - [ ] Bekasi Barat
-- [ ] Medan Satria
+- [ ] Medan Satria — slug `medan-satria` (`medansatria` 404s)
 - [ ] Bekasi Utara
 
 ### Kabupaten Bekasi — `kabupaten-bekasi` (23 kecamatan)
