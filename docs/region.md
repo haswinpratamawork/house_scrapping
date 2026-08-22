@@ -177,7 +177,7 @@
 - [ ] Bekasi Timur
 - [x] Rawalumbu — 863 active listings (2026-08-21) · slug `rawalumbu` (`rawa-lumbu` 404s)
 - [ ] Bekasi Selatan
-- [ ] Bekasi Barat
+- [x] Bekasi Barat — 1,306 active listings (2026-08-22)
 - [x] Medan Satria — 857 active listings (2026-08-21) · slug `medan-satria` (`medansatria` 404s)
 - [ ] Bekasi Utara
 
