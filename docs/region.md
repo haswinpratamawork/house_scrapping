@@ -173,7 +173,7 @@
 - [x] Pondok Melati — 241 active listings (2026-08-20) · slug `pondokmelati`
 - [ ] Jati Asih
 - [x] Bantar Gebang — 415 active listings (2026-08-21)
-- [ ] Mustika Jaya — slug `mustikajaya` (`mustika-jaya` 404s)
+- [x] Mustika Jaya — 1,416 active listings (2026-08-24) · slug `mustikajaya` (`mustika-jaya` 404s)
 - [x] Bekasi Timur — 2,214 active listings (2026-08-24)
 - [x] Rawalumbu — 863 active listings (2026-08-21) · slug `rawalumbu` (`rawa-lumbu` 404s)
 - [ ] Bekasi Selatan
