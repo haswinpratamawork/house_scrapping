@@ -179,7 +179,7 @@
 - [ ] Bekasi Selatan
 - [x] Bekasi Barat — 1,306 active listings (2026-08-22)
 - [x] Medan Satria — 857 active listings (2026-08-21) · slug `medan-satria` (`medansatria` 404s)
-- [ ] Bekasi Utara
+- [x] Bekasi Utara — 2,435 active listings (2026-08-24)
 
 ### Kabupaten Bekasi — `kabupaten-bekasi` (23 kecamatan)
 - [ ] Setu
