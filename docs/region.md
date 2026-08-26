@@ -171,7 +171,7 @@
 - [x] Pondok Gede — 1,342 active listings (2026-08-20)
 - [x] Jati Sampurna — 1,574 active listings (2026-08-20) · slug `jatisampurna`
 - [x] Pondok Melati — 241 active listings (2026-08-20) · slug `pondokmelati`
-- [ ] Jati Asih
+- [x] Jati Asih — 2,591 active listings (2026-08-24)
 - [x] Bantar Gebang — 415 active listings (2026-08-21)
 - [x] Mustika Jaya — 1,416 active listings (2026-08-24) · slug `mustikajaya` (`mustika-jaya` 404s)
 - [x] Bekasi Timur — 2,214 active listings (2026-08-24)
