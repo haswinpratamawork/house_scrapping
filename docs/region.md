@@ -176,7 +176,7 @@
 - [x] Mustika Jaya — 1,416 active listings (2026-08-24) · slug `mustikajaya` (`mustika-jaya` 404s)
 - [x] Bekasi Timur — 2,214 active listings (2026-08-24)
 - [x] Rawalumbu — 863 active listings (2026-08-21) · slug `rawalumbu` (`rawa-lumbu` 404s)
-- [ ] Bekasi Selatan
+- [x] Bekasi Selatan — 1,103 active listings (2026-08-26)
 - [x] Bekasi Barat — 1,306 active listings (2026-08-22)
 - [x] Medan Satria — 857 active listings (2026-08-21) · slug `medan-satria` (`medansatria` 404s)
 - [x] Bekasi Utara — 2,435 active listings (2026-08-24)
